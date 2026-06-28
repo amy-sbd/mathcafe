@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>算数Café｜計算ワザ図鑑</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Kiwi Maru', 'Hiragino Maru Gothic ProN', sans-serif;
+      background-color: #FAF6F0;
+    }
+
+    .title-font {
+      font-family: 'Mochiy Pop One', 'Kiwi Maru', sans-serif;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="flex justify-center min-h-screen text-stone-700 select-none">
+
+  <main class="w-full max-w-md min-h-screen bg-[#FFFDF9] shadow-lg border-x border-[#EADBC8] flex flex-col">
+
+    <!-- ヘッダー -->
+    <header class="sticky top-0 z-10 bg-[#F5EBE0] border-b border-[#EADBC8] p-4">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="title-font text-lg text-[#AF8260] flex items-center gap-1">
+            ☕ 算数Café
+          </h1>
+          <p class="text-[11px] text-stone-500 mt-1">
+            計算ワザ図鑑
+          </p>
+        </div>
+
+        <div class="flex gap-2">
+          <div class="bg-white/80 border border-[#EADBC8] rounded-full px-3 py-1 text-xs font-bold text-[#AF8260]">
+            🍬 <span id="pointText">0</span> pt
+          </div>
+          <div class="bg-white/80 border border-[#EADBC8] rounded-full px-3 py-1 text-xs font-bold text-[#AF8260]">
+            🔥 <span id="streakText">0</span>日
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- メイン -->
+    <div class="flex-1 overflow-y-auto p-4 pb-24">
+
+      <!-- トップ画面 -->
+      <section id="homeScreen" class="screen active space-y-5">
+
+        <!-- キャラカード -->
+        <div class="bg-gradient-to-b from-[#FFFDF9] to-[#F5EBE0] border border-[#EADBC8] rounded-2xl p-5 text-center shadow-inner">
+          <div class="text-6xl mb-3">🧁</div>
+          <h2 class="font-bold text-[#AF8260]">
+            今日も3分だけ、計算ワザを仕入れよう
+          </h2>
+          <p id="characterMessage" class="text-xs text-stone-500 mt-2 leading-relaxed">
+            むずかしい問題じゃなくて、計算の見方を覚える日だよ。
+          </p>
+        </div>
+
+        <!-- 今日のワザ -->
+        <div class="bg-[#F9F5F6] border-2 border-dashed border-[#F2D7D9] rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">✨</span>
+            <h3 class="font-bold text-sm text-[#AF8260]">今日のワザ</h3>
+          </div>
+
+          <h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
+          <p id="todaySkillDesc" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
+
+          <div class="bg-white rounded-xl border border-stone-200 p-3 mt-3">
+            <p class="text-[11px] text-stone-400 mb-1">たとえば</p>
+            <p id="todaySkillExample" class="font-bold text-sm text-stone-800 leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- ボタン -->
+        <div class="grid gap-3">
+          <button id="startQuizBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
+            3問チャレンジする 🍰
+          </button>
+
+          <button id="openBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
+            ワザ図鑑を見る 📖
+          </button>
+        </div>
+
+      </section>
+
+      <!-- クイズ画面 -->
+      <section id="quizScreen" class="screen space-y-4">
+
+        <div class="flex justify-between items-center">
+          <button id="backHomeBtn" class="text-xs underline text-stone-400">
+            ← トップへ
+          </button>
+          <p id="quizProgressText" class="text-xs text-stone-400">
+            1 / 3 問め
+          </p>
+        </div>
+
+        <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
+          <p class="text-xs text-stone-400 mb-1">今日のワザ</p>
+          <h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
+          <p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
+          <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 min-h-[80px] flex items-center justify-center text-center">
+            <p id="questionText" class="font-bold text-stone-800 leading-relaxed"></p>
+          </div>
+
+          <div id="optionArea" class="grid gap-2.5 mt-4"></div>
+
+          <div id="feedbackBox" class="hidden mt-4 p-3 rounded-xl text-center text-sm font-bold"></div>
+
+          <button id="nextQuestionBtn" class="hidden w-full mt-4 bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
+            つぎへ ➡️
+          </button>
+        </div>
+
+      </section>
+
+      <!-- 結果画面 -->
+      <section id="resultScreen" class="screen space-y-5 text-center">
+
+        <div class="bg-[#FBF9F1] border-2 border-[#EADBC8] rounded-2xl p-5 shadow-sm">
+          <div id="resultIcon" class="text-5xl">🎉</div>
+          <h2 class="font-bold text-lg text-stone-800 mt-3">
+            チャレンジ終了！
+          </h2>
+          <p id="resultMessage" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
+
+          <div class="bg-white rounded-xl border border-stone-200 p-4 mt-5">
+            <p class="text-sm text-stone-500">正解数</p>
+            <p class="text-3xl font-bold text-[#D5B4B4] title-font">
+              <span id="resultCorrectText">0</span> / 3
+            </p>
+
+            <div class="h-[1px] bg-stone-200 my-3"></div>
+
+            <p class="text-sm text-stone-500">もらえたマカロン</p>
+            <p class="text-2xl font-bold text-[#AF8260] title-font">
+              +<span id="earnedPointText">0</span> pt
+            </p>
+          </div>
+        </div>
+
+        <button id="goBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
+          図鑑を見る 📖
+        </button>
+
+        <button id="resultHomeBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
+          トップへ戻る
+        </button>
+
+      </section>
+
+      <!-- 図鑑画面 -->
+      <section id="bookScreen" class="screen space-y-4">
+
+        <div class="flex justify-between items-center">
+          <h2 class="font-bold text-lg text-[#AF8260]">
+            📖 計算ワザ図鑑
+          </h2>
+          <button id="bookHomeBtn" class="text-xs underline text-stone-400">
+            トップへ
+          </button>
+        </div>
+
+        <p class="text-xs text-stone-500 leading-relaxed">
+          3問チャレンジに取り組むと、ワザが図鑑に登録されます。
+          まずは「知ってるワザ」を少しずつ増やそう。
+        </p>
+
+        <div id="bookList" class="grid gap-3"></div>
+
+      </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-[#FFFDF9] border-t border-[#EADBC8] p-3">
+      <div class="flex justify-between items-center text-[10px] text-stone-400">
+        <span>© 2026 算数Café</span>
+        <button id="resetBtn" class="underline hover:text-rose-400">
+          データリセット
+        </button>
+      </div>
+    </footer>
+
+    <!-- トースト -->
+    <div id="toast" class="fixed bottom-16 left-1/2 -translate-x-1/2 bg-stone-800 text-white text-xs px-4 py-2.5 rounded-full shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+      メッセージ
+    </div>
+
+  </main>
+
+  <script>
+    // =========================
+    // データ
+    // =========================
+
+    const SKILLS = [
+      {
+        id: "distributive",
+        name: "分配法則",
+        icon: "✨",
+        desc: "大きな数を分けて考えるワザ。暗算しやすい形に変えられるよ。",
+        example: "18 × 7 = (10 + 8) × 7 = 10×7 + 8×7",
+        hint: "数を「きりのいい数」と「残り」に分けると見やすくなるよ。",
+        questions: [
+          {
+            q: "12 × 7 を工夫します。\n(10 + 2) × 7 = 10×7 + □×7\n□に入る数は？",
+            options: ["2", "7", "10", "12"],
+            answer: 0,
+            exp: "12を10と2に分けているので、□は2です。"
+          },
+          {
+            q: "99 × 6 を暗算しやすくするなら、どれが便利？",
+            options: ["(90 + 9) × 6", "(100 - 1) × 6", "(50 + 49) × 6", "99 × (3 + 3)"],
+            answer: 1,
+            exp: "99は100より1少ない数。100×6 - 1×6 と考えると楽です。"
+          },
+          {
+            q: "21 × 8 を分けて考える式として自然なのはどれ？",
+            options: ["(20 + 1) × 8", "(10 + 11) × 8", "(7 + 14) × 8", "(3 + 18) × 8"],
+            answer: 0,
+            exp: "21は20と1に分けると、20×8 + 1×8 で計算しやすいです。"
+          }
+        ]
+      },
+      {
+        id: "same-number",
+        name: "同じ数を見つけてまとめる",
+        icon: "🧲",
+        desc: "同じ数がかけられているところを見つけて、ひとまとめにするワザ。",
+        example: "3×8 + 7×8 = (3 + 7) × 8",
+        hint: "同じ「×8」などを見つけたら、まとめられるサイン。",
+        questions: [
+          {
+            q: "3×8 + 7×8 をまとめると？",
+            options: ["(3+7)×8", "3×(8+7)", "8×8", "10+8"],
+            answer: 0,
+            exp: "どちらにも×8があるので、3と7をまとめて (3+7)×8 になります。"
+          },
+          {
+            q: "12×5 + 8×5 = □×5\n□に入る数は？",
+            options: ["4", "10", "20", "40"],
+            answer: 2,
+            exp: "12と8をまとめます。12+8=20 なので、20×5 です。"
+          },
+          {
+            q: "6×9 + 4×9 を工夫して計算すると？",
+            options: ["10×9", "6×13", "4×15", "9×9"],
+            answer: 0,
+            exp: "6×9と4×9は、どちらも×9。だから (6+4)×9 = 10×9 です。"
+          }
+        ]
+      },
+      {
+        id: "easy-first",
+        name: "計算できる部分を先に計算する",
+        icon: "🍰",
+        desc: "順番を入れかえて、きりのいい組み合わせを先に作るワザ。",
+        example: "25 × 7 × 4 = 25 × 4 × 7 = 100 × 7",
+        hint: "25と4、125と8、5と2などは仲良しペア。",
+        questions: [
+          {
+            q: "25 × 7 × 4 を計算しやすくするなら、先に計算するのは？",
+            options: ["25×4", "7×4", "25×7", "全部そのまま"],
+            answer: 0,
+            exp: "25×4=100 になるので、先に計算すると楽です。"
+          },
+          {
+            q: "5 × 13 × 2 を工夫すると？",
+            options: ["10×13", "5×15", "13×7", "2×18"],
+            answer: 0,
+            exp: "5×2=10 なので、10×13 にできます。"
+          },
+          {
+            q: "125 × 6 × 8 を計算しやすくするなら？",
+            options: ["125×8×6", "125×6×8のまま", "6×8×125だけ", "125+8+6"],
+            answer: 0,
+            exp: "125×8=1000 なので、1000×6 と考えられます。"
+          }
+        ]
+      }
+    ];
+
+    const CHARACTER_MESSAGES = [
+      "今日は計算の近道をひとつ覚えよう。",
+      "たくさんやらなくて大丈夫。3問だけでOK。",
+      "式の形が見えると、計算はかなり楽になるよ。",
+      "正解よりも、『そう見ればいいのか』が大事だよ。"
+    ];
+
+    // =========================
+    // 状態
+    // =========================
+
+    let state = {
+      points: 0,
+      streak: 0,
+      lastPlayedDate: "",
+      unlockedSkillIds: [],
+      currentSkillIndex: 0,
+      currentQuestionIndex: 0,
+      correctCount: 0,
+      answered: false,
+      quizFinishedToday: false
+    };
+
+    // =========================
+    // DOM
+    // =========================
+
+    const screens = {
+      home: document.getElementById("homeScreen"),
+      quiz: document.getElementById("quizScreen"),
+      result: document.getElementById("resultScreen"),
+      book: document.getElementById("bookScreen")
+    };
+
+    const pointText = document.getElementById("pointText");
+    const streakText = document.getElementById("streakText");
+    const characterMessage = document.getElementById("characterMessage");
+
+    const todaySkillName = document.getElementById("todaySkillName");
+    const todaySkillDesc = document.getElementById("todaySkillDesc");
+    const todaySkillExample = document.getElementById("todaySkillExample");
+
+    const startQuizBtn = document.getElementById("startQuizBtn");
+    const openBookBtn = document.getElementById("openBookBtn");
+
+    const backHomeBtn = document.getElementById("backHomeBtn");
+    const quizProgressText = document.getElementById("quizProgressText");
+    const quizSkillName = document.getElementById("quizSkillName");
+    const quizSkillHint = document.getElementById("quizSkillHint");
+    const questionText = document.getElementById("questionText");
+    const optionArea = document.getElementById("optionArea");
+    const feedbackBox = document.getElementById("feedbackBox");
+    const nextQuestionBtn = document.getElementById("nextQuestionBtn");
+
+    const resultIcon = document.getElementById("resultIcon");
+    const resultMessage = document.getElementById("resultMessage");
+    const resultCorrectText = document.getElementById("resultCorrectText");
+    const earnedPointText = document.getElementById("earnedPointText");
+    const goBookBtn = document.getElementById("goBookBtn");
+    const resultHomeBtn = document.getElementById("resultHomeBtn");
+
+    const bookHomeBtn = document.getElementById("bookHomeBtn");
+    const bookList = document.getElementById("bookList");
+
+    const resetBtn = document.getElementById("resetBtn");
+    const toast = document.getElementById("toast");
+
+    // =========================
+    // 基本関数
+    // =========================
+
+    function getTodayString() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function showScreen(name) {
+      Object.values(screens).forEach(screen => screen.classList.remove("active"));
+      screens[name].classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.style.opacity = "1";
+      setTimeout(() => {
+        toast.style.opacity = "0";
+      }, 2200);
+    }
+
+    function getTodaySkill() {
+      return SKILLS[state.currentSkillIndex];
+    }
+
+    function saveData() {
+      localStorage.setItem("math_cafe_toolbook_save", JSON.stringify({
+        points: state.points,
+        streak: state.streak,
+        lastPlayedDate: state.lastPlayedDate,
+        unlockedSkillIds: state.unlockedSkillIds,
+        currentSkillIndex: state.currentSkillIndex
+      }));
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem("math_cafe_toolbook_save");
+
+      if (!saved) {
+        updateHome();
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(saved);
+        state.points = parsed.points || 0;
+        state.streak = parsed.streak || 0;
+        state.lastPlayedDate = parsed.lastPlayedDate || "";
+        state.unlockedSkillIds = parsed.unlockedSkillIds || [];
+        state.currentSkillIndex = parsed.currentSkillIndex || 0;
+      } catch (e) {
+        console.error("セーブデータの読み込みに失敗しました", e);
+      }
+
+      updateHome();
+    }
+
+    function updateHome() {
+      const skill = getTodaySkill();
+
+      pointText.textContent = state.points;
+      streakText.textContent = state.streak;
+
+      todaySkillName.textContent = `${skill.icon} ${skill.name}`;
+      todaySkillDesc.textContent = skill.desc;
+      todaySkillExample.textContent = skill.example;
+
+      const randomIndex = Math.floor(Math.random() * CHARACTER_MESSAGES.length);
+      characterMessage.textContent = CHARACTER_MESSAGES[randomIndex];
+    }
+
+    // =========================
+    // クイズ
+    // =========================
+
+    function startQuiz() {
+      state.currentQuestionIndex = 0;
+      state.correctCount = 0;
+      state.answered = false;
+
+      loadQuestion();
+      showScreen("quiz");
+    }
+
+    function loadQuestion() {
+      const skill = getTodaySkill();
+      const question = skill.questions[state.currentQuestionIndex];
+
+      state.answered = false;
+
+      quizProgressText.textContent = `${state.currentQuestionIndex + 1} / ${skill.questions.length} 問め`;
+      quizSkillName.textContent = `${skill.icon} ${skill.name}`;
+      quizSkillHint.textContent = skill.hint;
+
+      questionText.innerHTML = question.q.replace(/\n/g, "<br>");
+
+      feedbackBox.classList.add("hidden");
+      nextQuestionBtn.classList.add("hidden");
+
+      optionArea.innerHTML = "";
+
+      question.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "w-full text-left bg-[#FFFDF9] hover:bg-[#FAF6F0] active:bg-[#F3D7CA] border border-stone-200 hover:border-stone-400 p-3.5 rounded-xl text-sm font-semibold transition-all shadow-sm flex items-center justify-between";
+
+        btn.innerHTML = `
+          <span>${option}</span>
+          <span class="text-xs text-stone-300">☕</span>
+        `;
+
+        btn.addEventListener("click", () => answerQuestion(index));
+        optionArea.appendChild(btn);
+      });
+    }
+
+    function answerQuestion(selectedIndex) {
+      if (state.answered) return;
+
+      state.answered = true;
+
+      const skill = getTodaySkill();
+      const question = skill.questions[state.currentQuestionIndex];
+      const isCorrect = selectedIndex === question.answer;
+
+      const buttons = optionArea.querySelectorAll("button");
+
+      buttons.forEach((btn, index) => {
+        btn.disabled = true;
+
+        const mark = btn.querySelector("span:last-child");
+
+        if (index === question.answer) {
+          btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
+          btn.classList.add("bg-emerald-50", "border-emerald-300", "text-emerald-700");
+          mark.textContent = "⭕";
+        } else if (index === selectedIndex) {
+          btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
+          btn.classList.add("bg-rose-50", "border-rose-300", "text-rose-700");
+          mark.textContent = "❌";
+        } else {
+          btn.classList.add("opacity-40");
+        }
+      });
+
+      if (isCorrect) {
+        state.correctCount++;
+        feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200";
+        feedbackBox.innerHTML = `🌟 せいかい！<br><span class="text-xs font-normal">${question.exp}</span>`;
+      } else {
+        feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200";
+        feedbackBox.innerHTML = `🍓 おしい！<br><span class="text-xs font-normal">${question.exp}</span>`;
+      }
+
+      feedbackBox.classList.remove("hidden");
+      nextQuestionBtn.classList.remove("hidden");
+    }
+
+    function goNextQuestion() {
+      const skill = getTodaySkill();
+
+      state.currentQuestionIndex++;
+
+      if (state.currentQuestionIndex < skill.questions.length) {
+        loadQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      const skill = getTodaySkill();
+      const today = getTodayString();
+
+      let earned = state.correctCount * 5;
+
+      if (state.correctCount === 3) {
+        earned += 5;
+      }
+
+      state.points += earned;
+
+      // 図鑑登録
+      if (!state.unlockedSkillIds.includes(skill.id)) {
+        state.unlockedSkillIds.push(skill.id);
+      }
+
+      // 連続日数
+      if (state.lastPlayedDate !== today) {
+        state.streak += 1;
+        state.lastPlayedDate = today;
+      }
+
+      // 次のワザへ
+      state.currentSkillIndex = (state.currentSkillIndex + 1) % SKILLS.length;
+
+      resultCorrectText.textContent = state.correctCount;
+      earnedPointText.textContent = earned;
+
+      if (state.correctCount === 3) {
+        resultIcon.textContent = "🏆";
+        resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
+      } else if (state.correctCount === 2) {
+        resultIcon.textContent = "🎉";
+        resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
+      } else if (state.correctCount === 1) {
+        resultIcon.textContent = "☕";
+        resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
+      } else {
+        resultIcon.textContent = "🍪";
+        resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
+      }
+
+      saveData();
+      updateHome();
+      showScreen("result");
+    }
+
+    // =========================
+    // 図鑑
+    // =========================
+
+    function renderBook() {
+      bookList.innerHTML = "";
+
+      SKILLS.forEach(skill => {
+        const unlocked = state.unlockedSkillIds.includes(skill.id);
+
+        const card = document.createElement("div");
+        card.className = unlocked
+          ? "bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm"
+          : "bg-stone-100 border border-stone-200 rounded-2xl p-4 opacity-70";
+
+        if (unlocked) {
+          card.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="text-3xl">${skill.icon}</div>
+              <div>
+                <h3 class="font-bold text-[#AF8260]">${skill.name}</h3>
+                <p class="text-xs text-stone-500 mt-1 leading-relaxed">${skill.desc}</p>
+                <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-2 mt-3">
+                  <p class="text-[11px] text-stone-400 mb-1">例</p>
+                  <p class="text-xs font-bold text-stone-700">${skill.example}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="flex items-center gap-3">
+              <div class="text-3xl">🔒</div>
+              <div>
+                <h3 class="font-bold text-stone-500">まだ見つけていないワザ</h3>
+                <p class="text-xs text-stone-400 mt-1">3問チャレンジで登録されます。</p>
+              </div>
+            </div>
+          `;
+        }
+
+        bookList.appendChild(card);
+      });
+    }
+
+    // =========================
+    // イベント
+    // =========================
+
+    startQuizBtn.addEventListener("click", startQuiz);
+
+    openBookBtn.addEventListener("click", () => {
+      renderBook();
+      showScreen("book");
+    });
+
+    backHomeBtn.addEventListener("click", () => {
+      showScreen("home");
+    });
+
+    nextQuestionBtn.addEventListener("click", goNextQuestion);
+
+    goBookBtn.addEventListener("click", () => {
+      renderBook();
+      showScreen("book");
+    });
+
+    resultHomeBtn.addEventListener("click", () => {
+      showScreen("home");
+    });
+
+    bookHomeBtn.addEventListener("click", () => {
+      showScreen("home");
+    });
+
+    resetBtn.addEventListener("click", () => {
+      const ok = window.confirm("データをすべて消して、最初からやり直しますか？");
+
+      if (!ok) return;
+
+      localStorage.removeItem("math_cafe_toolbook_save");
+
+      state = {
+        points: 0,
+        streak: 0,
+        lastPlayedDate: "",
+        unlockedSkillIds: [],
+        currentSkillIndex: 0,
+        currentQuestionIndex: 0,
+        correctCount: 0,
+        answered: false,
+        quizFinishedToday: false
+      };
+
+      updateHome();
+      renderBook();
+      showScreen("home");
+      showToast("データをリセットしました ☕");
+    });
+
+    // =========================
+    // 起動
+    // =========================
+
+    window.addEventListener("load", () => {
+      loadData();
+    });
+  </script>
+</body>
+</html>
