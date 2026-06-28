@@ -125,8 +125,9 @@
             <h3 id="todaySkillLabel" class="font-bold text-sm text-[#AF8260]">本日のレシピ</h3>
           </div>
 
-          <h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
-          <p id="todaySkillDesc" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
+          <p id="todayMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+<h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
+<p id="todaySkillDesc" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
 
           <div class="bg-white rounded-xl border border-stone-200 p-3 mt-3">
             <p class="text-[11px] text-stone-400 mb-1">たとえば</p>
@@ -197,8 +198,9 @@
     </span>
   </div>
 
-  <h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
-  <p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
+  <p id="quizMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+<h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
+<p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
 </div>
 
         <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
@@ -301,6 +303,7 @@
       {
         id: "distributive",
         name: "分配法則",
+        menuName: "ふわふわ分け算マフィン",
         icon: "✨",
         desc: "大きな数を分けて考えるワザ。暗算しやすい形に変えられるよ。",
         example: "18 × 7 = (10 + 8) × 7 = 10×7 + 8×7",
@@ -334,9 +337,10 @@
         ]
       },
       {
-        id: "same-number",
-        name: "同じ数を見つけてまとめる",
-        icon: "🧲",
+  id: "same-number",
+  name: "同じ数を見つけてまとめる",
+  menuName: "まとめてベリーパフェ",
+  icon: "🧲",
         desc: "同じ数がかけられているところを見つけて、ひとまとめにするワザ。",
         example: "3×8 + 7×8 = (3 + 7) × 8",
         hint: "同じ「×8」などを見つけたら、まとめられるサイン。",
@@ -369,9 +373,10 @@
         ]
       },
       {
-        id: "easy-first",
-        name: "計算できる部分を先に計算する",
-        icon: "🍰",
+  id: "easy-first",
+  name: "計算できる部分を先に計算する",
+  menuName: "100点マカロンプレート",
+  icon: "🍰",
         desc: "順番を入れかえて、きりのいい組み合わせを先に作るワザ。",
         example: "25 × 7 × 4 = 25 × 4 × 7 = 100 × 7",
         hint: "25と4、125と8、5と2などは仲良しペア。",
@@ -404,9 +409,10 @@
         ]
       },
             {
-        id: "factor-split",
-        name: "数を分解してかける",
-        icon: "🧩",
+  id: "factor-split",
+  name: "数を分解してかける",
+  menuName: "くみたてチョコタルト",
+  icon: "🧩",
         desc: "数をかけ算の形に分けて、きりのいい数を作るワザ。",
         example: "36 × 25 = 9 × 4 × 25 = 9 × 100",
         hint: "25を見つけたら、4と組み合わせて100を作れないか考えてみよう。",
@@ -439,9 +445,10 @@
                 ]
       },
       {
-        id: "pair-sum",
-        name: "和の組み合わせを考える",
-        icon: "🤝",
+  id: "pair-sum",
+  name: "和の組み合わせを考える",
+  menuName: "なかよしペアクッキー",
+  icon: "🤝",
         desc: "たし算をそのまま順番にするのではなく、同じ合計になるペアを作るワザ。",
         example: "1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = (1+9) + (2+8) + (3+7) + (4+6) + 5",
         hint: "最初と最後、2番目と最後から2番目を組み合わせると、同じ合計を作れることがあります。",
@@ -474,9 +481,10 @@
                 ]
       },
       {
-        id: "arithmetic-sequence",
-        name: "等差数列の基本",
-        icon: "📏",
+  id: "arithmetic-sequence",
+  name: "等差数列の基本",
+  menuName: "ならんでプリンアラモード",
+  icon: "📏",
         desc: "同じ間隔で増える数を、最初と最後を使ってまとめて考えるワザ。",
         example: "2 + 4 + 6 + 8 + 10 = (2 + 10) × 5 ÷ 2",
         hint: "同じ間隔で増えている数は、最初と最後を組み合わせて平均を作ると見やすくなります。",
@@ -509,9 +517,10 @@
                 ]
       },
       {
-        id: "multiply-block",
-        name: "×や÷の部分をひとまとまりと考える",
-        icon: "🧱",
+  id: "multiply-block",
+  name: "×や÷の部分をひとまとまりと考える",
+  menuName: "かたまりブラウニー",
+  icon: "🧱",
         desc: "たし算やひき算の中にある、かけ算・わり算の部分を先にひとまとまりで見るワザ。",
         example: "2 + 3 × 4 = 2 + 12",
         hint: "式の中に×や÷があるときは、そこを先にひとまとまりとして見ます。",
@@ -544,9 +553,10 @@
                 ]
       },
       {
-        id: "parentheses-block",
-        name: "かっこをひとまとまりと考える",
-        icon: "📦",
+  id: "parentheses-block",
+  name: "かっこをひとまとまりと考える",
+  menuName: "つつみこみクリームパン",
+  icon: "📦",
         desc: "かっこの中を先にひとまとまりで見てから、外の計算をするワザ。",
         example: "(3 + 5) × 6 = 8 × 6",
         hint: "かっこがあるときは、まず中身をひとまとまりとして見ます。",
@@ -579,9 +589,10 @@
                 ]
       },
       {
-        id: "unit-conversion",
-        name: "単位変換の基本",
-        icon: "📐",
+  id: "unit-conversion",
+  name: "単位変換の基本",
+  menuName: "ぴったり計量ラテ",
+  icon: "📐",
         desc: "単位がちがう数を、同じ単位にそろえてから考えるワザ。",
         example: "1.5L = 1500mL",
         hint: "LとmL、mとcm、kgとgは、単位をそろえると比べやすくなります。",
@@ -614,9 +625,10 @@
                 ]
       },
       {
-        id: "fraction-transform",
-        name: "分数を変形して計算",
-        icon: "🍫",
+  id: "fraction-transform",
+  name: "分数を変形して計算",
+  menuName: "とろける分数ショコラ",
+  icon: "🍫",
         desc: "小数を分数に直したり、約分しやすい形にしてから計算するワザ。",
         example: "0.25 × 36 = 1/4 × 36 = 9",
         hint: "0.5、0.25、0.75 などは分数に直すと計算しやすいことがあります。",
@@ -736,8 +748,9 @@ const cafeProgressBar = document.getElementById("cafeProgressBar");
 const nextCafePointText = document.getElementById("nextCafePointText");
 
     const todaySkillLabel = document.getElementById("todaySkillLabel");
-    const todaySkillName = document.getElementById("todaySkillName");
-    const todaySkillDesc = document.getElementById("todaySkillDesc");
+const todayMenuName = document.getElementById("todayMenuName");
+const todaySkillName = document.getElementById("todaySkillName");
+const todaySkillDesc = document.getElementById("todaySkillDesc");
     const todaySkillExample = document.getElementById("todaySkillExample");
     const bookCountText = document.getElementById("bookCountText");
     const bookTotalText = document.getElementById("bookTotalText");
@@ -759,6 +772,7 @@ const nextCafePointText = document.getElementById("nextCafePointText");
     const quizSkillHint = document.getElementById("quizSkillHint");
     const quizModeLabel = document.getElementById("quizModeLabel");
 const reviewBadge = document.getElementById("reviewBadge");
+const quizMenuName = document.getElementById("quizMenuName");
     const questionText = document.getElementById("questionText");
     const optionArea = document.getElementById("optionArea");
     const feedbackBox = document.getElementById("feedbackBox");
@@ -907,6 +921,7 @@ updateCafeRank();
   todaySkillLabel.textContent = "本日のレシピ";
 }
 
+todayMenuName.textContent = skill.menuName ? `新メニュー：${skill.menuName}` : "";
 todaySkillName.textContent = `${skill.icon} ${skill.name}`;
 todaySkillDesc.textContent = skill.desc;
 todaySkillExample.textContent = skill.example;
@@ -997,8 +1012,12 @@ function startReviewQuiz() {
       state.answered = false;
 
       quizProgressText.textContent = `${state.currentQuestionIndex + 1} / ${skill.questions.length} 問め`;
-      quizSkillName.textContent = `${skill.icon} ${skill.name}`;
-      quizSkillHint.textContent = skill.hint;
+      if (quizMenuName) {
+  quizMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
+}
+
+quizSkillName.textContent = `${skill.icon} ${skill.name}`;
+quizSkillHint.textContent = skill.hint;
 
       if (state.isReviewMode) {
   quizModeLabel.textContent = "登録済みレシピの復習";
@@ -1193,8 +1212,11 @@ function startReviewQuiz() {
         </span>
       </div>
 
-      <h3 class="font-bold text-[#AF8260]">${skill.name}</h3>
-      <p class="text-xs text-stone-500 mt-1 leading-relaxed">${skill.desc}</p>
+      <p class="text-xs font-bold text-[#D5B4B4] mb-1">
+  ${skill.menuName ? skill.menuName : "計算レシピ"}
+</p>
+<h3 class="font-bold text-[#AF8260]">${skill.name}</h3>
+<p class="text-xs text-stone-500 mt-1 leading-relaxed">${skill.desc}</p>
 
       <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-2 mt-3">
         <p class="text-[11px] text-stone-400 mb-1">例</p>
@@ -1213,8 +1235,9 @@ function startReviewQuiz() {
           No.${index + 1}
         </span>
       </div>
-      <h3 class="font-bold text-stone-500">まだ見つけていないワザ</h3>
-      <p class="text-xs text-stone-400 mt-1">3問チャレンジで登録されます。</p>
+      <p class="text-xs font-bold text-stone-400 mb-1">？？？メニュー</p>
+      <h3 class="font-bold text-stone-500">まだ見つけていないレシピ</h3>
+      <p class="text-xs text-stone-400 mt-1">本日の仕込みチャレンジで登録されます。</p>
     </div>
   </div>
 `;
