@@ -758,14 +758,15 @@ const reviewBadge = document.getElementById("reviewBadge");
 }
 
     function saveData() {
-      localStorage.setItem("math_cafe_toolbook_save", JSON.stringify({
-        points: state.points,
-        streak: state.streak,
-        lastPlayedDate: state.lastPlayedDate,
-        unlockedSkillIds: state.unlockedSkillIds,
-        currentSkillIndex: state.currentSkillIndex
-      }));
-    }
+  localStorage.setItem("math_cafe_toolbook_save", JSON.stringify({
+    points: state.points,
+    streak: state.streak,
+    lastPlayedDate: state.lastPlayedDate,
+    unlockedSkillIds: state.unlockedSkillIds,
+    currentSkillIndex: state.currentSkillIndex,
+    quizFinishedToday: state.quizFinishedToday
+  }));
+}
 
     function loadData() {
       const saved = localStorage.getItem("math_cafe_toolbook_save");
@@ -778,10 +779,13 @@ const reviewBadge = document.getElementById("reviewBadge");
       try {
         const parsed = JSON.parse(saved);
         state.points = parsed.points || 0;
-        state.streak = parsed.streak || 0;
-        state.lastPlayedDate = parsed.lastPlayedDate || "";
-        state.unlockedSkillIds = parsed.unlockedSkillIds || [];
-        state.currentSkillIndex = parsed.currentSkillIndex || 0;
+state.streak = parsed.streak || 0;
+state.lastPlayedDate = parsed.lastPlayedDate || "";
+state.unlockedSkillIds = parsed.unlockedSkillIds || [];
+state.currentSkillIndex = parsed.currentSkillIndex || 0;
+
+// 最後に今日のチャレンジをした日が今日なら、完了扱いにする
+state.quizFinishedToday = state.lastPlayedDate === getTodayString();
       } catch (e) {
         console.error("セーブデータの読み込みに失敗しました", e);
       }
@@ -830,6 +834,15 @@ if (unlockedCount === 0) {
 } else {
   bookProgressMessage.textContent = "全部のワザを登録できたよ！復習で使えるようにしていこう。";
 }
+
+// 今日のチャレンジが終わっているときは、ボタン表示を変える
+if (state.quizFinishedToday) {
+  startQuizBtn.textContent = "今日のチャレンジは完了 ☕";
+  startQuizBtn.classList.add("opacity-60");
+} else {
+  startQuizBtn.textContent = "今日の3問チャレンジ 🍰";
+  startQuizBtn.classList.remove("opacity-60");
+}
     }
 
     // =========================
@@ -837,6 +850,11 @@ if (unlockedCount === 0) {
     // =========================
 
     function startQuiz() {
+  if (state.quizFinishedToday) {
+    showToast("今日のチャレンジは完了しています。復習でワザを磨こう 🔁");
+    return;
+  }
+
   state.isReviewMode = false;
   state.reviewSkillId = "";
   state.currentQuestionIndex = 0;
@@ -958,54 +976,85 @@ function startReviewQuiz() {
     }
 
     function finishQuiz() {
-      const skill = getCurrentQuizSkill();
-      const today = getTodayString();
+  const skill = getCurrentQuizSkill();
+  const today = getTodayString();
 
-      let earned = state.correctCount * 5;
+  let earned = 0;
 
-      if (state.correctCount === 3) {
-        earned += 5;
-      }
+  if (state.isReviewMode) {
+    // 復習モードは少なめポイント
+    earned = state.correctCount * 2;
 
-      state.points += earned;
-
-      // 図鑑登録
-      if (!state.unlockedSkillIds.includes(skill.id)) {
-        state.unlockedSkillIds.push(skill.id);
-      }
-
-      // 連続日数
-      if (state.lastPlayedDate !== today) {
-        state.streak += 1;
-        state.lastPlayedDate = today;
-      }
-
-      // 今日のチャレンジのときだけ、次のワザへ進む
-if (!state.isReviewMode) {
-  state.currentSkillIndex = (state.currentSkillIndex + 1) % SKILLS.length;
-}
-
-      resultCorrectText.textContent = state.correctCount;
-      earnedPointText.textContent = earned;
-
-      if (state.correctCount === 3) {
-        resultIcon.textContent = "🏆";
-        resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
-      } else if (state.correctCount === 2) {
-        resultIcon.textContent = "🎉";
-        resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
-      } else if (state.correctCount === 1) {
-        resultIcon.textContent = "☕";
-        resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
-      } else {
-        resultIcon.textContent = "🍪";
-        resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
-      }
-
-      saveData();
-      updateHome();
-      showScreen("result");
+    if (state.correctCount === 3) {
+      earned += 2;
     }
+  } else {
+    // 今日のチャレンジは通常ポイント
+    earned = state.correctCount * 5;
+
+    if (state.correctCount === 3) {
+      earned += 5;
+    }
+  }
+
+  state.points += earned;
+
+  if (!state.isReviewMode) {
+    // 今日のチャレンジだけ図鑑登録
+    if (!state.unlockedSkillIds.includes(skill.id)) {
+      state.unlockedSkillIds.push(skill.id);
+    }
+
+    // 今日のチャレンジだけ連続日数を更新
+    if (state.lastPlayedDate !== today) {
+      state.streak += 1;
+      state.lastPlayedDate = today;
+    }
+
+    // 今日のチャレンジ完了
+    state.quizFinishedToday = true;
+
+    // 今日のチャレンジだけ次のワザへ進む
+    state.currentSkillIndex = (state.currentSkillIndex + 1) % SKILLS.length;
+  }
+
+  resultCorrectText.textContent = state.correctCount;
+  earnedPointText.textContent = earned;
+
+  if (state.isReviewMode) {
+    if (state.correctCount === 3) {
+      resultIcon.textContent = "💮";
+      resultMessage.textContent = "復習パーフェクト！前に覚えたワザがちゃんと残ってるね。";
+    } else if (state.correctCount === 2) {
+      resultIcon.textContent = "🔁";
+      resultMessage.textContent = "いい復習になったね。忘れかけたところを思い出せたら成功です。";
+    } else if (state.correctCount === 1) {
+      resultIcon.textContent = "☕";
+      resultMessage.textContent = "復習は思い出す練習。もう一度見るだけでも意味があります。";
+    } else {
+      resultIcon.textContent = "🍪";
+      resultMessage.textContent = "忘れていても大丈夫。図鑑で見方を確認してから、またやってみよう。";
+    }
+  } else {
+    if (state.correctCount === 3) {
+      resultIcon.textContent = "🏆";
+      resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
+    } else if (state.correctCount === 2) {
+      resultIcon.textContent = "🎉";
+      resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
+    } else if (state.correctCount === 1) {
+      resultIcon.textContent = "☕";
+      resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
+    } else {
+      resultIcon.textContent = "🍪";
+      resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
+    }
+  }
+
+  saveData();
+  updateHome();
+  showScreen("result");
+}
 
     // =========================
     // 図鑑
