@@ -75,6 +75,26 @@
           </p>
         </div>
 
+        <!-- 図鑑の進み具合 -->
+<div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
+  <div class="flex justify-between items-center mb-2">
+    <h3 class="font-bold text-sm text-[#AF8260] flex items-center gap-1">
+      📖 ワザ図鑑
+    </h3>
+    <p class="text-xs text-stone-500">
+      <span id="bookCountText">0</span> / <span id="bookTotalText">0</span> 登録
+    </p>
+  </div>
+
+  <div class="w-full bg-stone-100 rounded-full h-3 overflow-hidden border border-stone-200">
+    <div id="bookProgressBar" class="bg-[#E4C59E] h-full transition-all duration-500" style="width: 0%"></div>
+  </div>
+
+  <p id="bookProgressMessage" class="text-xs text-stone-500 mt-2">
+    まずは1つ目のワザを登録しよう。
+  </p>
+</div>
+
         <!-- 今日のワザ -->
         <div class="bg-[#F9F5F6] border-2 border-dashed border-[#F2D7D9] rounded-2xl p-4">
           <div class="flex items-center gap-2 mb-2">
@@ -91,16 +111,46 @@
           </div>
         </div>
 
+        <!-- 今日の見方カード -->
+<div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
+  <div class="flex items-center gap-2 mb-3">
+    <span class="text-xl">🔍</span>
+    <h3 class="font-bold text-sm text-[#AF8260]">今日の見方</h3>
+  </div>
+
+  <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-4 text-center">
+    <p id="visualStepStart" class="text-xl font-bold text-stone-800"></p>
+
+    <div class="my-3 text-stone-300">↓</div>
+
+    <p id="visualStepOne" class="text-sm font-bold text-[#AF8260]"></p>
+
+    <div class="my-3 text-stone-300">↓</div>
+
+    <p id="visualStepTwo" class="text-sm font-bold text-stone-700"></p>
+
+    <div class="my-3 text-stone-300">↓</div>
+
+    <p id="visualStepEnd" class="text-sm font-bold text-emerald-700"></p>
+  </div>
+
+  <p id="visualStepTip" class="text-xs text-stone-500 mt-3 leading-relaxed"></p>
+</div>
+
         <!-- ボタン -->
         <div class="grid gap-3">
-          <button id="startQuizBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
-            3問チャレンジする 🍰
-          </button>
+  <button id="startQuizBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
+    今日の3問チャレンジ 🍰
+  </button>
 
-          <button id="openBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
-            ワザ図鑑を見る 📖
-          </button>
-        </div>
+  <button id="reviewQuizBtn" class="w-full bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
+    登録したワザを復習する 🔁
+  </button>
+
+  <button id="openBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
+    ワザ図鑑を見る 📖
+  </button>
+</div>
 
       </section>
 
@@ -117,10 +167,16 @@
         </div>
 
         <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
-          <p class="text-xs text-stone-400 mb-1">今日のワザ</p>
-          <h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
-          <p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
-        </div>
+  <div class="flex justify-between items-center mb-1">
+    <p id="quizModeLabel" class="text-xs text-stone-400">今日のワザ</p>
+    <span id="reviewBadge" class="hidden text-[10px] bg-[#D5B4B4] text-white px-2 py-0.5 rounded-full font-bold">
+      復習モード
+    </span>
+  </div>
+
+  <h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
+  <p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
+</div>
 
         <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
           <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 min-h-[80px] flex items-center justify-center text-center">
@@ -226,24 +282,31 @@
         desc: "大きな数を分けて考えるワザ。暗算しやすい形に変えられるよ。",
         example: "18 × 7 = (10 + 8) × 7 = 10×7 + 8×7",
         hint: "数を「きりのいい数」と「残り」に分けると見やすくなるよ。",
+        visual: {
+  start: "18 × 7",
+  step1: "① 18を 10 と 8 に分ける",
+  step2: "② 10×7 と 8×7 に分けて考える",
+  end: "③ 70 + 56 = 126",
+  tip: "大きな数は、きりのいい数に分けると見やすくなるよ。これが分配法則の入り口です。"
+},
         questions: [
           {
             q: "12 × 7 を工夫します。\n(10 + 2) × 7 = 10×7 + □×7\n□に入る数は？",
             options: ["2", "7", "10", "12"],
             answer: 0,
-            exp: "12を10と2に分けているので、□は2です。"
+            exp: "12×7をそのまま計算するより、12を10と2に分けると見やすくなります。10×7 と 2×7 に分けて考えるのがこのワザです。"
           },
           {
             q: "99 × 6 を暗算しやすくするなら、どれが便利？",
             options: ["(90 + 9) × 6", "(100 - 1) × 6", "(50 + 49) × 6", "99 × (3 + 3)"],
             answer: 1,
-            exp: "99は100より1少ない数。100×6 - 1×6 と考えると楽です。"
+            exp: "99は100に近い数です。100×6 から 1×6 を引く、と見ると暗算しやすくなります。きりのいい数に近づけるのがポイントです。"
           },
           {
             q: "21 × 8 を分けて考える式として自然なのはどれ？",
             options: ["(20 + 1) × 8", "(10 + 11) × 8", "(7 + 14) × 8", "(3 + 18) × 8"],
             answer: 0,
-            exp: "21は20と1に分けると、20×8 + 1×8 で計算しやすいです。"
+            exp: "21は20と1に分けると、20×8 と 1×8 にできます。大きな数をきりのいい数に分けると、計算の道すじが見えやすくなります。"
           }
         ]
       },
@@ -254,24 +317,31 @@
         desc: "同じ数がかけられているところを見つけて、ひとまとめにするワザ。",
         example: "3×8 + 7×8 = (3 + 7) × 8",
         hint: "同じ「×8」などを見つけたら、まとめられるサイン。",
+        visual: {
+  start: "3×8 + 7×8",
+  step1: "① 同じ「×8」を見つける",
+  step2: "② 3 と 7 をまとめる",
+  end: "③ (3 + 7) × 8 = 10 × 8",
+  tip: "同じ数がかけられているときは、前の数をまとめられるよ。「同じもの探し」がポイントです。"
+},
         questions: [
           {
             q: "3×8 + 7×8 をまとめると？",
             options: ["(3+7)×8", "3×(8+7)", "8×8", "10+8"],
             answer: 0,
-            exp: "どちらにも×8があるので、3と7をまとめて (3+7)×8 になります。"
+            exp: "3×8 と 7×8 は、どちらにも同じ「×8」があります。同じものを見つけたら、前の数だけを 3+7 とまとめて考えられます。"
           },
           {
             q: "12×5 + 8×5 = □×5\n□に入る数は？",
             options: ["4", "10", "20", "40"],
             answer: 2,
-            exp: "12と8をまとめます。12+8=20 なので、20×5 です。"
+            exp: "12×5 と 8×5 は、どちらも「×5」です。だから 12 と 8 を先にまとめて、(12+8)×5 と見ることができます。"
           },
           {
             q: "6×9 + 4×9 を工夫して計算すると？",
             options: ["10×9", "6×13", "4×15", "9×9"],
             answer: 0,
-            exp: "6×9と4×9は、どちらも×9。だから (6+4)×9 = 10×9 です。"
+            exp: "6×9 と 4×9 の共通点は「×9」です。同じ数がくっついているところを見つけると、6+4 を先にまとめられます。"
           }
         ]
       },
@@ -282,24 +352,66 @@
         desc: "順番を入れかえて、きりのいい組み合わせを先に作るワザ。",
         example: "25 × 7 × 4 = 25 × 4 × 7 = 100 × 7",
         hint: "25と4、125と8、5と2などは仲良しペア。",
+        visual: {
+  start: "25 × 7 × 4",
+  step1: "① 25 と 4 のペアを見つける",
+  step2: "② 25 × 4 を先に計算する",
+  end: "③ 100 × 7 = 700",
+  tip: "かけ算だけの式は、順番を入れかえても答えは同じ。100を作れるペアを先に見ると楽です。"
+},
         questions: [
           {
             q: "25 × 7 × 4 を計算しやすくするなら、先に計算するのは？",
             options: ["25×4", "7×4", "25×7", "全部そのまま"],
             answer: 0,
-            exp: "25×4=100 になるので、先に計算すると楽です。"
+            exp: "25×7×4 は、左から順番に計算しなくても大丈夫です。25 と 4 を先に見つけると、25×4=100 になって一気に計算しやすくなります。"
           },
           {
             q: "5 × 13 × 2 を工夫すると？",
             options: ["10×13", "5×15", "13×7", "2×18"],
             answer: 0,
-            exp: "5×2=10 なので、10×13 にできます。"
+            exp: "5 と 2 は、先に計算すると 10 になる仲良しペアです。5×13×2 を 5×2×13 と見ると、10×13 になって楽に計算できます。"
           },
           {
             q: "125 × 6 × 8 を計算しやすくするなら？",
             options: ["125×8×6", "125×6×8のまま", "6×8×125だけ", "125+8+6"],
             answer: 0,
-            exp: "125×8=1000 なので、1000×6 と考えられます。"
+            exp: "125 と 8 は、先に計算すると 1000 になります。大きく見える式でも、きりのいい数を作れるペアを探すと見通しがよくなります。"
+          }
+        ]
+      },
+            {
+        id: "factor-split",
+        name: "数を分解してかける",
+        icon: "🧩",
+        desc: "数をかけ算の形に分けて、きりのいい数を作るワザ。",
+        example: "36 × 25 = 9 × 4 × 25 = 9 × 100",
+        hint: "25を見つけたら、4と組み合わせて100を作れないか考えてみよう。",
+        visual: {
+          start: "36 × 25",
+          step1: "① 36を 9 × 4 に分ける",
+          step2: "② 4 × 25 のペアを見つける",
+          end: "③ 9 × 100 = 900",
+          tip: "25は4と組むと100になります。数を分解して、きりのいい数を作るのがポイントです。"
+        },
+        questions: [
+          {
+            q: "28 × 25 を工夫します。\n28を分解するなら、どれが便利？",
+            options: ["7 × 4", "10 + 18", "20 + 8", "14 × 2"],
+            answer: 0,
+            exp: "25は4と組むと100になります。28を7×4に分けると、7×4×25 = 7×100 と見られます。"
+          },
+          {
+            q: "16 × 25 を計算しやすくする式はどれ？",
+            options: ["4 × 4 × 25", "8 + 8 × 25", "10 × 6 × 25", "16 + 25"],
+            answer: 0,
+            exp: "16を4×4に分けると、4×25=100 を作れます。だから 4×100 と見られて計算が楽になります。"
+          },
+          {
+            q: "24 × 25 を工夫すると？",
+            options: ["6 × 4 × 25", "20 × 4 × 25", "12 + 12 × 25", "25 - 1"],
+            answer: 0,
+            exp: "24を6×4に分けると、4×25=100 が作れます。24×25 を 6×100 と見られるのがこのワザです。"
           }
         ]
       }
@@ -316,17 +428,19 @@
     // 状態
     // =========================
 
-    let state = {
-      points: 0,
-      streak: 0,
-      lastPlayedDate: "",
-      unlockedSkillIds: [],
-      currentSkillIndex: 0,
-      currentQuestionIndex: 0,
-      correctCount: 0,
-      answered: false,
-      quizFinishedToday: false
-    };
+    state = {
+  points: 0,
+  streak: 0,
+  lastPlayedDate: "",
+  unlockedSkillIds: [],
+  currentSkillIndex: 0,
+  currentQuestionIndex: 0,
+  correctCount: 0,
+  answered: false,
+  quizFinishedToday: false,
+  isReviewMode: false,
+  reviewSkillId: ""
+};
 
     // =========================
     // DOM
@@ -346,14 +460,26 @@
     const todaySkillName = document.getElementById("todaySkillName");
     const todaySkillDesc = document.getElementById("todaySkillDesc");
     const todaySkillExample = document.getElementById("todaySkillExample");
+    const bookCountText = document.getElementById("bookCountText");
+const bookTotalText = document.getElementById("bookTotalText");
+const bookProgressBar = document.getElementById("bookProgressBar");
+const bookProgressMessage = document.getElementById("bookProgressMessage");
+    const visualStepStart = document.getElementById("visualStepStart");
+const visualStepOne = document.getElementById("visualStepOne");
+const visualStepTwo = document.getElementById("visualStepTwo");
+const visualStepEnd = document.getElementById("visualStepEnd");
+const visualStepTip = document.getElementById("visualStepTip");
 
     const startQuizBtn = document.getElementById("startQuizBtn");
+    const reviewQuizBtn = document.getElementById("reviewQuizBtn");
     const openBookBtn = document.getElementById("openBookBtn");
 
     const backHomeBtn = document.getElementById("backHomeBtn");
     const quizProgressText = document.getElementById("quizProgressText");
     const quizSkillName = document.getElementById("quizSkillName");
     const quizSkillHint = document.getElementById("quizSkillHint");
+    const quizModeLabel = document.getElementById("quizModeLabel");
+const reviewBadge = document.getElementById("reviewBadge");
     const questionText = document.getElementById("questionText");
     const optionArea = document.getElementById("optionArea");
     const feedbackBox = document.getElementById("feedbackBox");
@@ -410,6 +536,17 @@
       return SKILLS[state.currentSkillIndex];
     }
 
+    function getCurrentQuizSkill() {
+  if (state.isReviewMode && state.reviewSkillId) {
+    const reviewSkill = SKILLS.find(skill => skill.id === state.reviewSkillId);
+    if (reviewSkill) {
+      return reviewSkill;
+    }
+  }
+
+  return getTodaySkill();
+}
+
     function saveData() {
       localStorage.setItem("math_cafe_toolbook_save", JSON.stringify({
         points: state.points,
@@ -452,8 +589,37 @@
       todaySkillDesc.textContent = skill.desc;
       todaySkillExample.textContent = skill.example;
 
+      if (skill.visual) {
+  visualStepStart.textContent = skill.visual.start;
+  visualStepOne.textContent = skill.visual.step1;
+  visualStepTwo.textContent = skill.visual.step2;
+  visualStepEnd.textContent = skill.visual.end;
+  visualStepTip.textContent = skill.visual.tip;
+} else {
+  visualStepStart.textContent = skill.example;
+  visualStepOne.textContent = "① 式の中に使えそうな形を見つける";
+  visualStepTwo.textContent = "② まとめたり、順番を変えたりする";
+  visualStepEnd.textContent = "③ 計算しやすい形にする";
+  visualStepTip.textContent = "計算ワザは、答えを急ぐより『どこを見るか』が大事です。";
+}
+
       const randomIndex = Math.floor(Math.random() * CHARACTER_MESSAGES.length);
       characterMessage.textContent = CHARACTER_MESSAGES[randomIndex];
+      const unlockedCount = state.unlockedSkillIds.length;
+const totalCount = SKILLS.length;
+const progressPercent = totalCount === 0 ? 0 : (unlockedCount / totalCount) * 100;
+
+bookCountText.textContent = unlockedCount;
+bookTotalText.textContent = totalCount;
+bookProgressBar.style.width = `${progressPercent}%`;
+
+if (unlockedCount === 0) {
+  bookProgressMessage.textContent = "まずは1つ目のワザを登録しよう。";
+} else if (unlockedCount < totalCount) {
+  bookProgressMessage.textContent = "少しずつワザが集まってきたよ。";
+} else {
+  bookProgressMessage.textContent = "全部のワザを登録できたよ！復習で使えるようにしていこう。";
+}
     }
 
     // =========================
@@ -461,16 +627,35 @@
     // =========================
 
     function startQuiz() {
-      state.currentQuestionIndex = 0;
-      state.correctCount = 0;
-      state.answered = false;
+  state.isReviewMode = false;
+  state.reviewSkillId = "";
+  state.currentQuestionIndex = 0;
+  state.correctCount = 0;
+  state.answered = false;
 
-      loadQuestion();
-      showScreen("quiz");
-    }
+  loadQuestion();
+  showScreen("quiz");
+}
+
+function startReviewQuiz() {
+  if (state.unlockedSkillIds.length === 0) {
+    showToast("まずは今日のワザを1つ登録しよう 📖");
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * state.unlockedSkillIds.length);
+  state.reviewSkillId = state.unlockedSkillIds[randomIndex];
+  state.isReviewMode = true;
+  state.currentQuestionIndex = 0;
+  state.correctCount = 0;
+  state.answered = false;
+
+  loadQuestion();
+  showScreen("quiz");
+}
 
     function loadQuestion() {
-      const skill = getTodaySkill();
+      const skill = getCurrentQuizSkill();
       const question = skill.questions[state.currentQuestionIndex];
 
       state.answered = false;
@@ -478,6 +663,14 @@
       quizProgressText.textContent = `${state.currentQuestionIndex + 1} / ${skill.questions.length} 問め`;
       quizSkillName.textContent = `${skill.icon} ${skill.name}`;
       quizSkillHint.textContent = skill.hint;
+
+      if (state.isReviewMode) {
+  quizModeLabel.textContent = "登録済みワザの復習";
+  reviewBadge.classList.remove("hidden");
+} else {
+  quizModeLabel.textContent = "今日のワザ";
+  reviewBadge.classList.add("hidden");
+}
 
       questionText.innerHTML = question.q.replace(/\n/g, "<br>");
 
@@ -505,7 +698,7 @@
 
       state.answered = true;
 
-      const skill = getTodaySkill();
+      const skill = getCurrentQuizSkill();
       const question = skill.questions[state.currentQuestionIndex];
       const isCorrect = selectedIndex === question.answer;
 
@@ -555,52 +748,82 @@
     }
 
     function finishQuiz() {
-      const skill = getTodaySkill();
-      const today = getTodayString();
+  const skill = getCurrentQuizSkill();
+  const today = getTodayString();
 
-      let earned = state.correctCount * 5;
+  let earned = 0;
 
-      if (state.correctCount === 3) {
-        earned += 5;
-      }
+  if (state.isReviewMode) {
+    // 復習モードは少なめポイント
+    earned = state.correctCount * 2;
 
-      state.points += earned;
-
-      // 図鑑登録
-      if (!state.unlockedSkillIds.includes(skill.id)) {
-        state.unlockedSkillIds.push(skill.id);
-      }
-
-      // 連続日数
-      if (state.lastPlayedDate !== today) {
-        state.streak += 1;
-        state.lastPlayedDate = today;
-      }
-
-      // 次のワザへ
-      state.currentSkillIndex = (state.currentSkillIndex + 1) % SKILLS.length;
-
-      resultCorrectText.textContent = state.correctCount;
-      earnedPointText.textContent = earned;
-
-      if (state.correctCount === 3) {
-        resultIcon.textContent = "🏆";
-        resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
-      } else if (state.correctCount === 2) {
-        resultIcon.textContent = "🎉";
-        resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
-      } else if (state.correctCount === 1) {
-        resultIcon.textContent = "☕";
-        resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
-      } else {
-        resultIcon.textContent = "🍪";
-        resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
-      }
-
-      saveData();
-      updateHome();
-      showScreen("result");
+    if (state.correctCount === 3) {
+      earned += 2;
     }
+  } else {
+    // 今日のチャレンジは通常ポイント
+    earned = state.correctCount * 5;
+
+    if (state.correctCount === 3) {
+      earned += 5;
+    }
+  }
+
+  state.points += earned;
+
+  if (!state.isReviewMode) {
+    // 今日のチャレンジだけ図鑑登録
+    if (!state.unlockedSkillIds.includes(skill.id)) {
+      state.unlockedSkillIds.push(skill.id);
+    }
+
+    // 今日のチャレンジだけ連続日数を更新
+    if (state.lastPlayedDate !== today) {
+      state.streak += 1;
+      state.lastPlayedDate = today;
+    }
+
+    // 今日のチャレンジだけ次のワザへ進む
+    state.currentSkillIndex = (state.currentSkillIndex + 1) % SKILLS.length;
+  }
+
+  resultCorrectText.textContent = state.correctCount;
+  earnedPointText.textContent = earned;
+
+  if (state.isReviewMode) {
+    if (state.correctCount === 3) {
+      resultIcon.textContent = "💮";
+      resultMessage.textContent = "復習パーフェクト！前に覚えたワザがちゃんと残ってるね。";
+    } else if (state.correctCount === 2) {
+      resultIcon.textContent = "🔁";
+      resultMessage.textContent = "いい復習になったね。忘れかけたところを思い出せたら成功です。";
+    } else if (state.correctCount === 1) {
+      resultIcon.textContent = "☕";
+      resultMessage.textContent = "復習は思い出す練習。もう一度見るだけでも意味があります。";
+    } else {
+      resultIcon.textContent = "🍪";
+      resultMessage.textContent = "忘れていても大丈夫。図鑑で見方を確認してから、またやってみよう。";
+    }
+  } else {
+    if (state.correctCount === 3) {
+      resultIcon.textContent = "🏆";
+      resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
+    } else if (state.correctCount === 2) {
+      resultIcon.textContent = "🎉";
+      resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
+    } else if (state.correctCount === 1) {
+      resultIcon.textContent = "☕";
+      resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
+    } else {
+      resultIcon.textContent = "🍪";
+      resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
+    }
+  }
+
+  saveData();
+  updateHome();
+  showScreen("result");
+}
 
     // =========================
     // 図鑑
@@ -609,7 +832,7 @@
     function renderBook() {
       bookList.innerHTML = "";
 
-      SKILLS.forEach(skill => {
+      SKILLS.forEach((skill, index) => {
         const unlocked = state.unlockedSkillIds.includes(skill.id);
 
         const card = document.createElement("div");
@@ -619,28 +842,43 @@
 
         if (unlocked) {
           card.innerHTML = `
-            <div class="flex items-start gap-3">
-              <div class="text-3xl">${skill.icon}</div>
-              <div>
-                <h3 class="font-bold text-[#AF8260]">${skill.name}</h3>
-                <p class="text-xs text-stone-500 mt-1 leading-relaxed">${skill.desc}</p>
-                <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-2 mt-3">
-                  <p class="text-[11px] text-stone-400 mb-1">例</p>
-                  <p class="text-xs font-bold text-stone-700">${skill.example}</p>
-                </div>
-              </div>
-            </div>
-          `;
+  <div class="flex items-start gap-3">
+    <div class="text-3xl">${skill.icon}</div>
+    <div class="flex-1">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="text-[10px] bg-[#F5EBE0] text-[#AF8260] px-2 py-0.5 rounded-full font-bold">
+          No.${index + 1}
+        </span>
+        <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-bold border border-emerald-200">
+          登録済み
+        </span>
+      </div>
+
+      <h3 class="font-bold text-[#AF8260]">${skill.name}</h3>
+      <p class="text-xs text-stone-500 mt-1 leading-relaxed">${skill.desc}</p>
+
+      <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-2 mt-3">
+        <p class="text-[11px] text-stone-400 mb-1">例</p>
+        <p class="text-xs font-bold text-stone-700">${skill.example}</p>
+      </div>
+    </div>
+  </div>
+`;
         } else {
           card.innerHTML = `
-            <div class="flex items-center gap-3">
-              <div class="text-3xl">🔒</div>
-              <div>
-                <h3 class="font-bold text-stone-500">まだ見つけていないワザ</h3>
-                <p class="text-xs text-stone-400 mt-1">3問チャレンジで登録されます。</p>
-              </div>
-            </div>
-          `;
+  <div class="flex items-center gap-3">
+    <div class="text-3xl">🔒</div>
+    <div>
+      <div class="mb-1">
+        <span class="text-[10px] bg-white text-stone-400 px-2 py-0.5 rounded-full font-bold border border-stone-200">
+          No.${index + 1}
+        </span>
+      </div>
+      <h3 class="font-bold text-stone-500">まだ見つけていないワザ</h3>
+      <p class="text-xs text-stone-400 mt-1">3問チャレンジで登録されます。</p>
+    </div>
+  </div>
+`;
         }
 
         bookList.appendChild(card);
@@ -652,6 +890,7 @@
     // =========================
 
     startQuizBtn.addEventListener("click", startQuiz);
+    reviewQuizBtn.addEventListener("click", startReviewQuiz);
 
     openBookBtn.addEventListener("click", () => {
       renderBook();
