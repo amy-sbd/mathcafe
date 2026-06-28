@@ -64,16 +64,39 @@
       <!-- トップ画面 -->
       <section id="homeScreen" class="screen active space-y-5">
 
-        <!-- キャラカード -->
-        <div class="bg-gradient-to-b from-[#FFFDF9] to-[#F5EBE0] border border-[#EADBC8] rounded-2xl p-5 text-center shadow-inner">
-          <div class="text-6xl mb-3">🧁</div>
-          <h2 class="font-bold text-[#AF8260]">
-            今日も3分だけ、計算ワザを仕入れよう
-          </h2>
-          <p id="characterMessage" class="text-xs text-stone-500 mt-2 leading-relaxed">
-            むずかしい問題じゃなくて、計算の見方を覚える日だよ。
-          </p>
-        </div>
+        <!-- カフェ育成カード -->
+<div class="bg-gradient-to-b from-[#FFFDF9] to-[#F5EBE0] border border-[#EADBC8] rounded-2xl p-5 text-center shadow-inner">
+  <div class="flex justify-between items-center mb-2">
+    <span class="text-[10px] bg-white/80 text-stone-500 px-2 py-0.5 rounded-full border border-stone-200">
+      あなたのお店
+    </span>
+    <span class="text-[10px] bg-[#D5B4B4] text-white px-2 py-0.5 rounded-full font-bold">
+      Lv.<span id="cafeLevelText">1</span>
+    </span>
+  </div>
+
+  <div id="cafeVisual" class="text-6xl mb-3">⛺</div>
+
+  <h2 id="cafeRankName" class="font-bold text-[#AF8260]">
+    ひだまりスタンド
+  </h2>
+
+  <p id="cafeRankDesc" class="text-xs text-stone-500 mt-2 leading-relaxed">
+    まだオープンしたての小さなスタンドです。
+  </p>
+
+  <div class="w-full bg-white rounded-full h-3 border border-stone-200 overflow-hidden mt-4">
+    <div id="cafeProgressBar" class="bg-[#E4C59E] h-full transition-all duration-500" style="width: 0%"></div>
+  </div>
+
+  <p class="text-[10px] text-stone-400 mt-1 text-right">
+    次のカフェまで：<span id="nextCafePointText">10</span> マカロン
+  </p>
+
+  <p id="characterMessage" class="text-xs text-stone-500 mt-3 leading-relaxed">
+    むずかしい問題じゃなくて、計算の見方を覚える日だよ。
+  </p>
+</div>
 
         <!-- 図鑑の進み具合 -->
 <div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
@@ -627,7 +650,45 @@
       }
     ];
 
-    const CHARACTER_MESSAGES = [
+    const CAFE_RANKS = [
+  {
+    level: 1,
+    name: "ひだまりスタンド",
+    visual: "⛺",
+    minPoints: 0,
+    desc: "オープンしたての小さなカフェ。まずはレシピを少しずつ集めよう。"
+  },
+  {
+    level: 2,
+    name: "キッチンカー",
+    visual: "🚚",
+    minPoints: 50,
+    desc: "マカロンの香りに誘われて、お客さんが少しずつ増えてきたよ。"
+  },
+  {
+    level: 3,
+    name: "ちいさなテラスカフェ",
+    visual: "☕",
+    minPoints: 120,
+    desc: "テラス席ができたよ。レシピブックもだんだんにぎやかに。"
+  },
+  {
+    level: 4,
+    name: "人気のスイーツカフェ",
+    visual: "🍰",
+    minPoints: 220,
+    desc: "町で評判のカフェに成長！計算レシピもかなり増えてきたね。"
+  },
+  {
+    level: 5,
+    name: "まほうのプリンセスカフェ",
+    visual: "🏰",
+    minPoints: 350,
+    desc: "キラキラの特別なカフェ。計算ワザを使いこなす店長に近づいたよ。"
+  }
+];
+
+const CHARACTER_MESSAGES = [
       "今日は計算の近道をひとつ覚えよう。",
       "たくさんやらなくて大丈夫。3問だけでOK。",
       "式の形が見えると、計算はかなり楽になるよ。",
@@ -664,8 +725,15 @@
     };
 
     const pointText = document.getElementById("pointText");
-    const streakText = document.getElementById("streakText");
-    const characterMessage = document.getElementById("characterMessage");
+const streakText = document.getElementById("streakText");
+const characterMessage = document.getElementById("characterMessage");
+
+const cafeLevelText = document.getElementById("cafeLevelText");
+const cafeVisual = document.getElementById("cafeVisual");
+const cafeRankName = document.getElementById("cafeRankName");
+const cafeRankDesc = document.getElementById("cafeRankDesc");
+const cafeProgressBar = document.getElementById("cafeProgressBar");
+const nextCafePointText = document.getElementById("nextCafePointText");
 
     const todaySkillLabel = document.getElementById("todaySkillLabel");
     const todaySkillName = document.getElementById("todaySkillName");
@@ -794,11 +862,44 @@ state.quizFinishedToday = state.lastPlayedDate === getTodayString();
       updateHome();
     }
 
-    function updateHome() {
+    function updateCafeRank() {
+  let currentRank = CAFE_RANKS[0];
+  let nextRank = null;
+
+  for (let i = CAFE_RANKS.length - 1; i >= 0; i--) {
+    if (state.points >= CAFE_RANKS[i].minPoints) {
+      currentRank = CAFE_RANKS[i];
+      nextRank = CAFE_RANKS[i + 1] || null;
+      break;
+    }
+  }
+
+  cafeLevelText.textContent = currentRank.level;
+  cafeVisual.textContent = currentRank.visual;
+  cafeRankName.textContent = currentRank.name;
+  cafeRankDesc.textContent = currentRank.desc;
+
+  if (nextRank) {
+    const currentMin = currentRank.minPoints;
+    const nextMin = nextRank.minPoints;
+    const progress = state.points - currentMin;
+    const range = nextMin - currentMin;
+    const percent = Math.min(100, Math.max(0, (progress / range) * 100));
+
+    cafeProgressBar.style.width = `${percent}%`;
+    nextCafePointText.textContent = nextMin - state.points;
+  } else {
+    cafeProgressBar.style.width = "100%";
+    nextCafePointText.textContent = "MAX";
+  }
+}
+
+function updateHome() {
       const skill = getTodaySkill();
 
       pointText.textContent = state.points;
-      streakText.textContent = state.streak;
+streakText.textContent = state.streak;
+updateCafeRank();
 
       if (state.quizFinishedToday) {
   todaySkillLabel.textContent = "明日のレシピ予告";
