@@ -43,8 +43,8 @@
             ☕ 算数Café
           </h1>
           <p class="text-[11px] text-stone-500 mt-1">
-            計算ワザ図鑑
-          </p>
+  レシピブックを育てよう
+</p>
         </div>
 
         <div class="flex gap-2">
@@ -79,8 +79,8 @@
 <div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
   <div class="flex justify-between items-center mb-2">
     <h3 class="font-bold text-sm text-[#AF8260] flex items-center gap-1">
-      📖 ワザ図鑑
-    </h3>
+  📖 レシピブック
+</h3>
     <p class="text-xs text-stone-500">
       <span id="bookCountText">0</span> / <span id="bookTotalText">0</span> 登録
     </p>
@@ -99,7 +99,7 @@
         <div class="bg-[#F9F5F6] border-2 border-dashed border-[#F2D7D9] rounded-2xl p-4">
           <div class="flex items-center gap-2 mb-2">
             <span class="text-xl">✨</span>
-            <h3 class="font-bold text-sm text-[#AF8260]">今日のワザ</h3>
+            <h3 id="todaySkillLabel" class="font-bold text-sm text-[#AF8260]">本日のレシピ</h3>
           </div>
 
           <h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
@@ -140,16 +140,16 @@
         <!-- ボタン -->
         <div class="grid gap-3">
   <button id="startQuizBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
-    今日の3問チャレンジ 🍰
-  </button>
+  本日の仕込みチャレンジ 🍰
+</button>
 
   <button id="reviewQuizBtn" class="w-full bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
-    登録したワザを復習する 🔁
-  </button>
+  レシピを復習する 🔁
+</button>
 
   <button id="openBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
-    ワザ図鑑を見る 📖
-  </button>
+  レシピブックを見る 📖
+</button>
 </div>
 
       </section>
@@ -168,7 +168,7 @@
 
         <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
   <div class="flex justify-between items-center mb-1">
-    <p id="quizModeLabel" class="text-xs text-stone-400">今日のワザ</p>
+    <p id="quizModeLabel" class="text-xs text-stone-400">本日のレシピ</p>
     <span id="reviewBadge" class="hidden text-[10px] bg-[#D5B4B4] text-white px-2 py-0.5 rounded-full font-bold">
       復習モード
     </span>
@@ -200,8 +200,8 @@
         <div class="bg-[#FBF9F1] border-2 border-[#EADBC8] rounded-2xl p-5 shadow-sm">
           <div id="resultIcon" class="text-5xl">🎉</div>
           <h2 class="font-bold text-lg text-stone-800 mt-3">
-            チャレンジ終了！
-          </h2>
+  仕込み完了！
+</h2>
           <p id="resultMessage" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
 
           <div class="bg-white rounded-xl border border-stone-200 p-4 mt-5">
@@ -220,8 +220,8 @@
         </div>
 
         <button id="goBookBtn" class="w-full bg-white hover:bg-[#FAF6F0] border border-[#EADBC8] text-[#AF8260] font-bold py-3 rounded-xl shadow-sm transition">
-          図鑑を見る 📖
-        </button>
+  レシピブックを見る 📖
+</button>
 
         <button id="resultHomeBtn" class="w-full bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
           トップへ戻る
@@ -667,18 +667,19 @@
     const streakText = document.getElementById("streakText");
     const characterMessage = document.getElementById("characterMessage");
 
+    const todaySkillLabel = document.getElementById("todaySkillLabel");
     const todaySkillName = document.getElementById("todaySkillName");
     const todaySkillDesc = document.getElementById("todaySkillDesc");
     const todaySkillExample = document.getElementById("todaySkillExample");
     const bookCountText = document.getElementById("bookCountText");
-const bookTotalText = document.getElementById("bookTotalText");
-const bookProgressBar = document.getElementById("bookProgressBar");
-const bookProgressMessage = document.getElementById("bookProgressMessage");
+    const bookTotalText = document.getElementById("bookTotalText");
+    const bookProgressBar = document.getElementById("bookProgressBar");
+    const bookProgressMessage = document.getElementById("bookProgressMessage");
     const visualStepStart = document.getElementById("visualStepStart");
-const visualStepOne = document.getElementById("visualStepOne");
-const visualStepTwo = document.getElementById("visualStepTwo");
-const visualStepEnd = document.getElementById("visualStepEnd");
-const visualStepTip = document.getElementById("visualStepTip");
+    const visualStepOne = document.getElementById("visualStepOne");
+    const visualStepTwo = document.getElementById("visualStepTwo");
+    const visualStepEnd = document.getElementById("visualStepEnd");
+    const visualStepTip = document.getElementById("visualStepTip");
 
     const startQuizBtn = document.getElementById("startQuizBtn");
     const reviewQuizBtn = document.getElementById("reviewQuizBtn");
@@ -799,9 +800,15 @@ state.quizFinishedToday = state.lastPlayedDate === getTodayString();
       pointText.textContent = state.points;
       streakText.textContent = state.streak;
 
-      todaySkillName.textContent = `${skill.icon} ${skill.name}`;
-      todaySkillDesc.textContent = skill.desc;
-      todaySkillExample.textContent = skill.example;
+      if (state.quizFinishedToday) {
+  todaySkillLabel.textContent = "明日のレシピ予告";
+} else {
+  todaySkillLabel.textContent = "本日のレシピ";
+}
+
+todaySkillName.textContent = `${skill.icon} ${skill.name}`;
+todaySkillDesc.textContent = skill.desc;
+todaySkillExample.textContent = skill.example;
 
       if (skill.visual) {
   visualStepStart.textContent = skill.visual.start;
@@ -837,10 +844,10 @@ if (unlockedCount === 0) {
 
 // 今日のチャレンジが終わっているときは、ボタン表示を変える
 if (state.quizFinishedToday) {
-  startQuizBtn.textContent = "今日のチャレンジは完了 ☕";
+  startQuizBtn.textContent = "本日の仕込みは完了 ☕";
   startQuizBtn.classList.add("opacity-60");
 } else {
-  startQuizBtn.textContent = "今日の3問チャレンジ 🍰";
+  startQuizBtn.textContent = "本日の仕込みチャレンジ 🍰";
   startQuizBtn.classList.remove("opacity-60");
 }
     }
@@ -893,10 +900,10 @@ function startReviewQuiz() {
       quizSkillHint.textContent = skill.hint;
 
       if (state.isReviewMode) {
-  quizModeLabel.textContent = "登録済みワザの復習";
+  quizModeLabel.textContent = "登録済みレシピの復習";
   reviewBadge.classList.remove("hidden");
 } else {
-  quizModeLabel.textContent = "今日のワザ";
+  quizModeLabel.textContent = "本日のレシピ";
   reviewBadge.classList.add("hidden");
 }
 
@@ -1023,32 +1030,32 @@ function startReviewQuiz() {
 
   if (state.isReviewMode) {
     if (state.correctCount === 3) {
-      resultIcon.textContent = "💮";
-      resultMessage.textContent = "復習パーフェクト！前に覚えたワザがちゃんと残ってるね。";
-    } else if (state.correctCount === 2) {
-      resultIcon.textContent = "🔁";
-      resultMessage.textContent = "いい復習になったね。忘れかけたところを思い出せたら成功です。";
-    } else if (state.correctCount === 1) {
-      resultIcon.textContent = "☕";
-      resultMessage.textContent = "復習は思い出す練習。もう一度見るだけでも意味があります。";
-    } else {
-      resultIcon.textContent = "🍪";
-      resultMessage.textContent = "忘れていても大丈夫。図鑑で見方を確認してから、またやってみよう。";
-    }
+  resultIcon.textContent = "💮";
+  resultMessage.textContent = "復習レシピ、完璧！前に作ったメニューがちゃんと身についてるね。";
+} else if (state.correctCount === 2) {
+  resultIcon.textContent = "🔁";
+  resultMessage.textContent = "いい仕込みなおしになったね。思い出せたところが増えたら成功です。";
+} else if (state.correctCount === 1) {
+  resultIcon.textContent = "☕";
+  resultMessage.textContent = "復習は、レシピをもう一度ながめる時間。少し思い出せたらOKです。";
+} else {
+  resultIcon.textContent = "🍪";
+  resultMessage.textContent = "忘れていても大丈夫。レシピブックで見方を確認して、また仕込みなおそう。";
+}
   } else {
     if (state.correctCount === 3) {
-      resultIcon.textContent = "🏆";
-      resultMessage.textContent = "パーフェクト！このワザ、かなり使えるようになってきたね。";
-    } else if (state.correctCount === 2) {
-      resultIcon.textContent = "🎉";
-      resultMessage.textContent = "いい感じ！考え方はかなりつかめてるよ。";
-    } else if (state.correctCount === 1) {
-      resultIcon.textContent = "☕";
-      resultMessage.textContent = "今日はワザを知っただけでもOK。次はもっと見えるはず。";
-    } else {
-      resultIcon.textContent = "🍪";
-      resultMessage.textContent = "まだ練習中。解説を読めたら今日はちゃんと前進だよ。";
-    }
+  resultIcon.textContent = "🏆";
+  resultMessage.textContent = "本日のレシピ、大成功！新メニューとしてお店に出せそうだよ。";
+} else if (state.correctCount === 2) {
+  resultIcon.textContent = "🎉";
+  resultMessage.textContent = "いい仕込みができたね。レシピの見方はかなりつかめてきたよ。";
+} else if (state.correctCount === 1) {
+  resultIcon.textContent = "☕";
+  resultMessage.textContent = "今日はレシピを知っただけでもOK。次はもっと作りやすくなるよ。";
+} else {
+  resultIcon.textContent = "🍪";
+  resultMessage.textContent = "まだ試作中。店長メモを読めたら、今日の仕込みはちゃんと前進です。";
+}
   }
 
   saveData();
