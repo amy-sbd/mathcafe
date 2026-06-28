@@ -398,7 +398,15 @@
       }, 2200);
     }
 
-    function getTodaySkill() {
+        function getTodaySkill() {
+      if (
+        state.currentSkillIndex < 0 ||
+        state.currentSkillIndex >= SKILLS.length ||
+        !SKILLS[state.currentSkillIndex]
+      ) {
+        state.currentSkillIndex = 0;
+      }
+
       return SKILLS[state.currentSkillIndex];
     }
 
