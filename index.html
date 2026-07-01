@@ -119,21 +119,21 @@
 </div>
 
         <!-- 今日のワザ -->
-        <div class="bg-[#F9F5F6] border-2 border-dashed border-[#F2D7D9] rounded-2xl p-4">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-xl">✨</span>
-            <h3 id="todaySkillLabel" class="font-bold text-sm text-[#AF8260]">本日のレシピ</h3>
-          </div>
+<div class="bg-[#F9F5F6] border-2 border-dashed border-[#F2D7D9] rounded-2xl p-4">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="text-xl">✨</span>
+    <h3 id="todaySkillLabel" class="font-bold text-sm text-[#AF8260]">本日のレシピ</h3>
+  </div>
 
-          <p id="todayMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
-<h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
-<p id="todaySkillDesc" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
+  <p id="todayMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+  <h4 id="todaySkillName" class="font-bold text-lg text-stone-800"></h4>
+  <p id="todaySkillDesc" class="text-sm text-stone-600 mt-2 leading-relaxed"></p>
 
-          <div class="bg-white rounded-xl border border-stone-200 p-3 mt-3">
-            <p class="text-[11px] text-stone-400 mb-1">たとえば</p>
-            <p id="todaySkillExample" class="font-bold text-sm text-stone-800 leading-relaxed"></p>
-          </div>
-        </div>
+  <div class="bg-white rounded-xl border border-stone-200 p-3 mt-3">
+    <p class="text-[11px] text-stone-400 mb-1">たとえば</p>
+    <p id="todaySkillExample" class="font-bold text-sm text-stone-800 leading-relaxed"></p>
+  </div>
+</div>
 
         <!-- 今日の見方カード -->
 <div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
@@ -178,47 +178,151 @@
 
       </section>
 
-      <!-- クイズ画面 -->
-      <section id="quizScreen" class="screen space-y-4">
+      <!-- STEP1 解説画面 -->
+<section id="lessonScreen" class="screen space-y-4">
 
-        <div class="flex justify-between items-center">
-          <button id="backHomeBtn" class="text-xs underline text-stone-400">
-            ← トップへ
-          </button>
-          <p id="quizProgressText" class="text-xs text-stone-400">
-            1 / 3 問め
-          </p>
-        </div>
-
-        <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
-  <div class="flex justify-between items-center mb-1">
-    <p id="quizModeLabel" class="text-xs text-stone-400">本日のレシピ</p>
-    <span id="reviewBadge" class="hidden text-[10px] bg-[#D5B4B4] text-white px-2 py-0.5 rounded-full font-bold">
-      復習モード
-    </span>
+  <div class="flex justify-between items-center">
+    <button id="lessonBackHomeBtn" class="text-xs underline text-stone-400">
+      ← トップへ
+    </button>
+    <p class="text-xs font-bold text-[#AF8260]">
+      STEP1 / 3　よんでわかる
+    </p>
   </div>
 
-  <p id="quizMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
-<h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
-<p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
-</div>
+  <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
+    <p class="text-xs text-stone-400 mb-1">よんでわかる</p>
+    <p id="lessonMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+    <h2 id="lessonSkillName" class="font-bold text-[#AF8260]"></h2>
+    <p id="lessonTitle" class="text-sm font-bold text-stone-700 mt-3"></p>
+  </div>
 
-        <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
-          <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 min-h-[80px] flex items-center justify-center text-center">
-            <p id="questionText" class="font-bold text-stone-800 leading-relaxed"></p>
-          </div>
+  <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
+    <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 text-center">
+      <p class="text-[11px] text-stone-400 mb-1">まずはこの式を見てみよう</p>
+      <p id="lessonExample" class="text-xl font-bold text-stone-800"></p>
+    </div>
 
-          <div id="optionArea" class="grid gap-2.5 mt-4"></div>
+    <div id="lessonSteps" class="mt-4 space-y-2"></div>
 
-          <div id="feedbackBox" class="hidden mt-4 p-3 rounded-xl text-center text-sm font-bold"></div>
+    <div class="bg-[#F9F5F6] border border-[#F2D7D9] rounded-xl p-3 mt-4">
+      <p class="text-[11px] text-stone-400 mb-1">店長メモ</p>
+      <p id="lessonPoint" class="text-xs text-stone-600 leading-relaxed"></p>
+    </div>
 
-          <button id="nextQuestionBtn" class="hidden w-full mt-4 bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
-            つぎへ ➡️
-          </button>
-        </div>
+    <button id="startQuestionsBtn" class="w-full mt-4 bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
+      STEP2 かいてできるへ進む ✏️
+    </button>
+  </div>
 
-      </section>
+</section>
 
+<!-- STEP2 穴埋め画面 -->
+<section id="fillScreen" class="screen space-y-4">
+
+  <div class="flex justify-between items-center">
+    <button id="fillBackLessonBtn" class="text-xs underline text-stone-400">
+      ← STEP1へ
+    </button>
+    <p class="text-xs font-bold text-[#AF8260]">
+      STEP2 / 3　かいてできる
+    </p>
+  </div>
+
+  <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
+    <p class="text-xs text-stone-400 mb-1">かいてできる</p>
+    <p id="fillMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+    <h2 id="fillSkillName" class="font-bold text-[#AF8260]"></h2>
+    <p id="fillTitle" class="text-sm font-bold text-stone-700 mt-3"></p>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
+
+    <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 text-center">
+      <p class="text-[11px] text-stone-400 mb-1">まずはこの式</p>
+      <p id="fillQuestion" class="text-xl font-bold text-stone-800"></p>
+    </div>
+
+    <div class="mt-4 space-y-3 text-center text-sm font-bold text-stone-700 leading-loose">
+      <div>
+        <span id="fillBefore"></span>
+      </div>
+
+      <div>
+        =
+        45 × (
+        <input id="blank0" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+        −
+        <input id="blank1" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+        )
+      </div>
+
+      <div>
+        =
+        45 ×
+        <input id="blank2" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+      </div>
+
+      <div>
+        =
+        <input id="blank3" inputmode="numeric" class="w-20 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+      </div>
+    </div>
+
+    <div id="fillFeedback" class="hidden mt-4 p-3 rounded-xl text-center text-sm font-bold"></div>
+
+    <button id="checkFillBtn" class="w-full mt-4 bg-[#AF8260] hover:bg-[#8F6543] text-white font-bold py-3 rounded-xl shadow-md transition">
+      答えをチェックする ✏️
+    </button>
+
+    <button id="goQuizBtn" class="hidden w-full mt-3 bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
+      STEP3 マスター問題へ進む ➡️
+    </button>
+
+  </div>
+
+</section>
+
+<!-- STEP3 クイズ画面 -->
+<section id="quizScreen" class="screen space-y-4">
+
+  <div class="flex justify-between items-center">
+    <button id="backHomeBtn" class="text-xs underline text-stone-400">
+      ← STEP2へ
+    </button>
+    <p id="quizProgressText" class="text-xs font-bold text-[#AF8260]">
+      STEP3 / 3　1 / 3 問め
+    </p>
+  </div>
+
+  <div class="bg-[#F9F5F6] border border-[#EADBC8] rounded-2xl p-4">
+    <div class="flex justify-between items-center mb-1">
+      <p id="quizModeLabel" class="text-xs text-stone-400">STEP3　マスター問題</p>
+      <span id="reviewBadge" class="hidden text-[10px] bg-[#D5B4B4] text-white px-2 py-0.5 rounded-full font-bold">
+        復習モード
+      </span>
+    </div>
+
+    <p id="quizMenuName" class="text-xs font-bold text-[#D5B4B4] mb-1"></p>
+    <h2 id="quizSkillName" class="font-bold text-[#AF8260]"></h2>
+    <p id="quizSkillHint" class="text-xs text-stone-500 mt-2 leading-relaxed"></p>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-stone-200 p-4 shadow-sm">
+    <div class="bg-[#FBF9F1] rounded-xl p-4 border border-stone-100 min-h-[80px] flex items-center justify-center text-center">
+      <p id="questionText" class="font-bold text-stone-800 leading-relaxed"></p>
+    </div>
+
+    <div id="optionArea" class="grid gap-2.5 mt-4"></div>
+
+    <div id="feedbackBox" class="hidden mt-4 p-3 rounded-xl text-center text-sm font-bold"></div>
+
+    <button id="nextQuestionBtn" class="hidden w-full mt-4 bg-[#D5B4B4] hover:bg-[#C29B9B] text-white font-bold py-3 rounded-xl shadow-md transition">
+      つぎへ ➡️
+    </button>
+  </div>
+
+</section>
       <!-- 結果画面 -->
       <section id="resultScreen" class="screen space-y-5 text-center">
 
@@ -315,26 +419,50 @@
   end: "③ 70 + 56 = 126",
   tip: "大きな数は、きりのいい数に分けると見やすくなるよ。これが分配法則の入り口です。"
 },
-        questions: [
-          {
-            q: "12 × 7 を工夫します。\n(10 + 2) × 7 = 10×7 + □×7\n□に入る数は？",
-            options: ["2", "7", "10", "12"],
-            answer: 0,
-            exp: "12×7をそのまま計算するより、12を10と2に分けると見やすくなります。10×7 と 2×7 に分けて考えるのがこのワザです。"
-          },
-          {
-            q: "99 × 6 を暗算しやすくするなら、どれが便利？",
-            options: ["(90 + 9) × 6", "(100 - 1) × 6", "(50 + 49) × 6", "99 × (3 + 3)"],
-            answer: 1,
-            exp: "99は100に近い数です。100×6 から 1×6 を引く、と見ると暗算しやすくなります。きりのいい数に近づけるのがポイントです。"
-          },
-          {
-            q: "21 × 8 を分けて考える式として自然なのはどれ？",
-            options: ["(20 + 1) × 8", "(10 + 11) × 8", "(7 + 14) × 8", "(3 + 18) × 8"],
-            answer: 0,
-            exp: "21は20と1に分けると、20×8 と 1×8 にできます。大きな数をきりのいい数に分けると、計算の道すじが見えやすくなります。"
-          }
-        ]
+lesson: {
+  title: "同じ数を見つけてまとめる",
+  example: "38×78 + 62×78",
+  steps: [
+    "① かけ算の部分に同じ数があるか見る",
+    "② どちらにも「×78」がある",
+    "③ 38 と 62 を先にまとめる",
+    "④ (38 + 62) × 78",
+    "⑤ 100 × 78 = 7800"
+  ],
+  point: "同じ数がかけられているときは、前の数をまとめられます。これも分配法則の大事な使い方です。",
+  fillBlank: {
+    title: "同じ数を見つけて、式をまとめよう",
+    question: "45×51 − 45×49",
+    before: "45×51 − 45×49",
+    blanks: ["51", "49", "2", "90"],
+    explanation: "どちらにも45があるので、45×(51−49) とまとめます。51−49=2、45×2=90です。"
+  }
+},
+questions: [
+  {
+    q: "48×96 + 52×96 では、同じ数はどれ？",
+    options: ["48", "52", "96", "100"],
+    answer: 2,
+    exp: "48×96 と 52×96 の両方に、同じ「×96」があります。同じ数を見つけるのが、まとめる第一歩です。"
+  },
+  {
+    q: "48×96 + 52×96 をまとめた式として正しいのはどれ？",
+    options: [
+      "(48 + 52) × 96",
+      "48 × (96 + 52)",
+      "(48 + 96) × 52",
+      "48 × 52 × 96"
+    ],
+    answer: 0,
+    exp: "どちらにも ×96 があるので、前の数の 48 と 52 をまとめます。だから (48+52)×96 です。"
+  },
+  {
+    q: "48×96 + 52×96 を工夫して計算すると？",
+    options: ["960", "4800", "9600", "10000"],
+    answer: 2,
+    exp: "(48+52)×96 = 100×96 = 9600 です。同じ数を見つけてまとめると、計算が一気に楽になります。"
+  }
+]
       },
       {
   id: "same-number",
@@ -730,11 +858,13 @@ const CHARACTER_MESSAGES = [
     // =========================
 
     const screens = {
-      home: document.getElementById("homeScreen"),
-      quiz: document.getElementById("quizScreen"),
-      result: document.getElementById("resultScreen"),
-      book: document.getElementById("bookScreen")
-    };
+  home: document.getElementById("homeScreen"),
+  lesson: document.getElementById("lessonScreen"),
+  fill: document.getElementById("fillScreen"),
+  quiz: document.getElementById("quizScreen"),
+  result: document.getElementById("resultScreen"),
+  book: document.getElementById("bookScreen")
+};
 
     const pointText = document.getElementById("pointText");
 const streakText = document.getElementById("streakText");
@@ -766,8 +896,34 @@ const todaySkillDesc = document.getElementById("todaySkillDesc");
     const reviewQuizBtn = document.getElementById("reviewQuizBtn");
     const openBookBtn = document.getElementById("openBookBtn");
 
-    const backHomeBtn = document.getElementById("backHomeBtn");
-    const quizProgressText = document.getElementById("quizProgressText");
+    const lessonBackHomeBtn = document.getElementById("lessonBackHomeBtn");
+const lessonMenuName = document.getElementById("lessonMenuName");
+const lessonSkillName = document.getElementById("lessonSkillName");
+const lessonTitle = document.getElementById("lessonTitle");
+const lessonExample = document.getElementById("lessonExample");
+const lessonSteps = document.getElementById("lessonSteps");
+const lessonPoint = document.getElementById("lessonPoint");
+const startQuestionsBtn = document.getElementById("startQuestionsBtn");
+
+const fillBackLessonBtn = document.getElementById("fillBackLessonBtn");
+const fillMenuName = document.getElementById("fillMenuName");
+const fillSkillName = document.getElementById("fillSkillName");
+const fillTitle = document.getElementById("fillTitle");
+const fillQuestion = document.getElementById("fillQuestion");
+const fillBefore = document.getElementById("fillBefore");
+const fillFeedback = document.getElementById("fillFeedback");
+const checkFillBtn = document.getElementById("checkFillBtn");
+const goQuizBtn = document.getElementById("goQuizBtn");
+
+const blankInputs = [
+  document.getElementById("blank0"),
+  document.getElementById("blank1"),
+  document.getElementById("blank2"),
+  document.getElementById("blank3")
+];
+
+const backHomeBtn = document.getElementById("backHomeBtn");
+const quizProgressText = document.getElementById("quizProgressText");
     const quizSkillName = document.getElementById("quizSkillName");
     const quizSkillHint = document.getElementById("quizSkillHint");
     const quizModeLabel = document.getElementById("quizModeLabel");
@@ -818,16 +974,17 @@ const quizMenuName = document.getElementById("quizMenuName");
     }
 
         function getTodaySkill() {
-      if (
-        state.currentSkillIndex < 0 ||
-        state.currentSkillIndex >= SKILLS.length ||
-        !SKILLS[state.currentSkillIndex]
-      ) {
-        state.currentSkillIndex = 0;
-      }
+  if (
+    typeof state.currentSkillIndex !== "number" ||
+    state.currentSkillIndex < 0 ||
+    state.currentSkillIndex >= SKILLS.length ||
+    !SKILLS[state.currentSkillIndex]
+  ) {
+    state.currentSkillIndex = 0;
+  }
 
-      return SKILLS[state.currentSkillIndex];
-    }
+  return SKILLS[state.currentSkillIndex];
+}
 
     function getCurrentQuizSkill() {
   if (state.isReviewMode && state.reviewSkillId) {
@@ -877,6 +1034,25 @@ state.quizFinishedToday = state.lastPlayedDate === getTodayString();
     }
 
     function updateCafeRank() {
+  const cafeLevelTextEl = document.getElementById("cafeLevelText");
+  const cafeVisualEl = document.getElementById("cafeVisual");
+  const cafeRankNameEl = document.getElementById("cafeRankName");
+  const cafeRankDescEl = document.getElementById("cafeRankDesc");
+  const cafeProgressBarEl = document.getElementById("cafeProgressBar");
+  const nextCafePointTextEl = document.getElementById("nextCafePointText");
+
+  // カフェ表示用のHTMLがまだない場合でも、アプリ全体を止めない
+  if (
+    !cafeLevelTextEl ||
+    !cafeVisualEl ||
+    !cafeRankNameEl ||
+    !cafeRankDescEl ||
+    !cafeProgressBarEl ||
+    !nextCafePointTextEl
+  ) {
+    return;
+  }
+
   let currentRank = CAFE_RANKS[0];
   let nextRank = null;
 
@@ -888,10 +1064,10 @@ state.quizFinishedToday = state.lastPlayedDate === getTodayString();
     }
   }
 
-  cafeLevelText.textContent = currentRank.level;
-  cafeVisual.textContent = currentRank.visual;
-  cafeRankName.textContent = currentRank.name;
-  cafeRankDesc.textContent = currentRank.desc;
+  cafeLevelTextEl.textContent = currentRank.level;
+  cafeVisualEl.textContent = currentRank.visual;
+  cafeRankNameEl.textContent = currentRank.name;
+  cafeRankDescEl.textContent = currentRank.desc;
 
   if (nextRank) {
     const currentMin = currentRank.minPoints;
@@ -900,83 +1076,241 @@ state.quizFinishedToday = state.lastPlayedDate === getTodayString();
     const range = nextMin - currentMin;
     const percent = Math.min(100, Math.max(0, (progress / range) * 100));
 
-    cafeProgressBar.style.width = `${percent}%`;
-    nextCafePointText.textContent = nextMin - state.points;
+    cafeProgressBarEl.style.width = `${percent}%`;
+    nextCafePointTextEl.textContent = nextMin - state.points;
   } else {
-    cafeProgressBar.style.width = "100%";
-    nextCafePointText.textContent = "MAX";
+    cafeProgressBarEl.style.width = "100%";
+    nextCafePointTextEl.textContent = "MAX";
   }
 }
 
 function updateHome() {
-      const skill = getTodaySkill();
+  const skill = getTodaySkill() || SKILLS[0];
 
-      pointText.textContent = state.points;
-streakText.textContent = state.streak;
-updateCafeRank();
+  if (!skill) {
+    console.error("表示できるレシピデータがありません");
+    return;
+  }
 
-      if (state.quizFinishedToday) {
-  todaySkillLabel.textContent = "明日のレシピ予告";
-} else {
-  todaySkillLabel.textContent = "本日のレシピ";
-}
+  // 念のため、ここで直接DOMを取り直す
+  const todaySkillLabelEl = document.getElementById("todaySkillLabel");
+  const todayMenuNameEl = document.getElementById("todayMenuName");
+  const todaySkillNameEl = document.getElementById("todaySkillName");
+  const todaySkillDescEl = document.getElementById("todaySkillDesc");
+  const todaySkillExampleEl = document.getElementById("todaySkillExample");
 
-todayMenuName.textContent = skill.menuName ? `新メニュー：${skill.menuName}` : "";
-todaySkillName.textContent = `${skill.icon} ${skill.name}`;
-todaySkillDesc.textContent = skill.desc;
-todaySkillExample.textContent = skill.example;
+  pointText.textContent = state.points;
+  streakText.textContent = state.streak;
+  updateCafeRank();
 
-      if (skill.visual) {
-  visualStepStart.textContent = skill.visual.start;
-  visualStepOne.textContent = skill.visual.step1;
-  visualStepTwo.textContent = skill.visual.step2;
-  visualStepEnd.textContent = skill.visual.end;
-  visualStepTip.textContent = skill.visual.tip;
-} else {
-  visualStepStart.textContent = skill.example;
-  visualStepOne.textContent = "① 式の中に使えそうな形を見つける";
-  visualStepTwo.textContent = "② まとめたり、順番を変えたりする";
-  visualStepEnd.textContent = "③ 計算しやすい形にする";
-  visualStepTip.textContent = "計算ワザは、答えを急ぐより『どこを見るか』が大事です。";
-}
+  if (todaySkillLabelEl) {
+    todaySkillLabelEl.textContent = state.quizFinishedToday
+      ? "明日のレシピ予告"
+      : "本日のレシピ";
+  }
 
-      const randomIndex = Math.floor(Math.random() * CHARACTER_MESSAGES.length);
-      characterMessage.textContent = CHARACTER_MESSAGES[randomIndex];
-      const unlockedCount = state.unlockedSkillIds.length;
-const totalCount = SKILLS.length;
-const progressPercent = totalCount === 0 ? 0 : (unlockedCount / totalCount) * 100;
+  if (todayMenuNameEl) {
+    todayMenuNameEl.textContent = skill.menuName
+      ? `新メニュー：${skill.menuName}`
+      : "新メニュー：計算レシピ";
+  }
 
-bookCountText.textContent = unlockedCount;
-bookTotalText.textContent = totalCount;
-bookProgressBar.style.width = `${progressPercent}%`;
+  if (todaySkillNameEl) {
+    todaySkillNameEl.textContent = `${skill.icon} ${skill.name}`;
+  }
 
-if (unlockedCount === 0) {
-  bookProgressMessage.textContent = "まずは1つ目のワザを登録しよう。";
-} else if (unlockedCount < totalCount) {
-  bookProgressMessage.textContent = "少しずつワザが集まってきたよ。";
-} else {
-  bookProgressMessage.textContent = "全部のワザを登録できたよ！復習で使えるようにしていこう。";
-}
+  if (todaySkillDescEl) {
+    todaySkillDescEl.textContent = skill.desc;
+  }
 
-// 今日のチャレンジが終わっているときは、ボタン表示を変える
-if (state.quizFinishedToday) {
-  startQuizBtn.textContent = "本日の仕込みは完了 ☕";
-  startQuizBtn.classList.add("opacity-60");
-} else {
-  startQuizBtn.textContent = "本日の仕込みチャレンジ 🍰";
-  startQuizBtn.classList.remove("opacity-60");
-}
+  if (todaySkillExampleEl) {
+    todaySkillExampleEl.textContent = skill.example;
+  }
+
+  if (visualStepStart && visualStepOne && visualStepTwo && visualStepEnd && visualStepTip) {
+    if (skill.visual) {
+      visualStepStart.textContent = skill.visual.start;
+      visualStepOne.textContent = skill.visual.step1;
+      visualStepTwo.textContent = skill.visual.step2;
+      visualStepEnd.textContent = skill.visual.end;
+      visualStepTip.textContent = skill.visual.tip;
+    } else {
+      visualStepStart.textContent = skill.example;
+      visualStepOne.textContent = "① 式の中に使えそうな形を見つける";
+      visualStepTwo.textContent = "② まとめたり、順番を変えたりする";
+      visualStepEnd.textContent = "③ 計算しやすい形にする";
+      visualStepTip.textContent = "計算レシピは、答えを急ぐより『どこを見るか』が大事です。";
     }
+  }
+
+  if (state.quizFinishedToday) {
+    characterMessage.textContent = "今日の新レシピは完成！もっとやるなら、登録したレシピを復習してみよう。";
+  } else {
+    const randomIndex = Math.floor(Math.random() * CHARACTER_MESSAGES.length);
+    characterMessage.textContent = CHARACTER_MESSAGES[randomIndex];
+  }
+
+  const unlockedCount = state.unlockedSkillIds.length;
+  const totalCount = SKILLS.length;
+  const progressPercent = totalCount === 0 ? 0 : (unlockedCount / totalCount) * 100;
+
+  bookCountText.textContent = unlockedCount;
+  bookTotalText.textContent = totalCount;
+  bookProgressBar.style.width = `${progressPercent}%`;
+
+  if (unlockedCount === 0) {
+    bookProgressMessage.textContent = "まずは1つ目のレシピを登録しよう。";
+  } else if (unlockedCount < totalCount) {
+    bookProgressMessage.textContent = "少しずつレシピが集まってきたよ。";
+  } else {
+    bookProgressMessage.textContent = "全部のレシピを登録できたよ！復習で使えるようにしていこう。";
+  }
+
+  if (state.quizFinishedToday) {
+    startQuizBtn.textContent = "本日の仕込みは完了 ☕";
+    startQuizBtn.classList.add("opacity-60");
+  } else {
+    startQuizBtn.textContent = "本日の仕込みチャレンジ 🍰";
+    startQuizBtn.classList.remove("opacity-60");
+  }
+}
+
+function forceRenderTodayRecipe() {
+  const skill = getTodaySkill() || SKILLS[0];
+
+  const todaySkillLabelEl = document.getElementById("todaySkillLabel");
+  const todayMenuNameEl = document.getElementById("todayMenuName");
+  const todaySkillNameEl = document.getElementById("todaySkillName");
+  const todaySkillDescEl = document.getElementById("todaySkillDesc");
+  const todaySkillExampleEl = document.getElementById("todaySkillExample");
+
+  if (!skill) {
+    return;
+  }
+
+  if (todaySkillLabelEl) {
+    todaySkillLabelEl.textContent = state.quizFinishedToday
+      ? "明日のレシピ予告"
+      : "本日のレシピ";
+  }
+
+  if (todayMenuNameEl) {
+    todayMenuNameEl.textContent = skill.menuName
+      ? `新メニュー：${skill.menuName}`
+      : "新メニュー：計算レシピ";
+  }
+
+  if (todaySkillNameEl) {
+    todaySkillNameEl.textContent = `${skill.icon} ${skill.name}`;
+  }
+
+  if (todaySkillDescEl) {
+    todaySkillDescEl.textContent = skill.desc;
+  }
+
+  if (todaySkillExampleEl) {
+    todaySkillExampleEl.textContent = skill.example;
+  }
+}
 
     // =========================
     // クイズ
     // =========================
 
-    function startQuiz() {
+    function showLesson() {
+  const skill = getCurrentQuizSkill();
+
+  if (!skill.lesson) {
+    loadQuestion();
+    showScreen("quiz");
+    return;
+  }
+
+  lessonMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
+  lessonSkillName.textContent = `${skill.icon} ${skill.name}`;
+  lessonTitle.textContent = skill.lesson.title;
+  lessonExample.textContent = skill.lesson.example;
+  lessonPoint.textContent = skill.lesson.point;
+
+  lessonSteps.innerHTML = "";
+
+  skill.lesson.steps.forEach(step => {
+    const item = document.createElement("div");
+    item.className = "bg-[#FFFDF9] border border-stone-200 rounded-xl p-3 text-sm font-bold text-stone-700";
+    item.textContent = step;
+    lessonSteps.appendChild(item);
+  });
+
+  showScreen("lesson");
+}
+
+function showFillBlank() {
+  const skill = getCurrentQuizSkill();
+
+  if (!skill.lesson || !skill.lesson.fillBlank) {
+    loadQuestion();
+    showScreen("quiz");
+    return;
+  }
+
+  const fill = skill.lesson.fillBlank;
+
+  fillMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
+  fillSkillName.textContent = `${skill.icon} ${skill.name}`;
+  fillTitle.textContent = fill.title;
+  fillQuestion.textContent = fill.question;
+  fillBefore.textContent = fill.before;
+
+  blankInputs.forEach(input => {
+    input.value = "";
+    input.classList.remove("border-emerald-400", "border-rose-400", "bg-emerald-50", "bg-rose-50");
+  });
+
+  fillFeedback.classList.add("hidden");
+  goQuizBtn.classList.add("hidden");
+  checkFillBtn.classList.remove("hidden");
+
+  showScreen("fill");
+}
+
+function checkFillBlank() {
+  const skill = getCurrentQuizSkill();
+  const fill = skill.lesson.fillBlank;
+
+  let allCorrect = true;
+
+  blankInputs.forEach((input, index) => {
+    const userAnswer = input.value.trim();
+    const correctAnswer = fill.blanks[index];
+
+    input.classList.remove("border-emerald-400", "border-rose-400", "bg-emerald-50", "bg-rose-50");
+
+    if (userAnswer === correctAnswer) {
+      input.classList.add("border-emerald-400", "bg-emerald-50");
+    } else {
+      input.classList.add("border-rose-400", "bg-rose-50");
+      allCorrect = false;
+    }
+  });
+
+  fillFeedback.classList.remove("hidden");
+
+  if (allCorrect) {
+    fillFeedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200";
+    fillFeedback.innerHTML = `🌟 せいかい！<br><span class="text-xs font-normal">${fill.explanation}</span>`;
+    goQuizBtn.classList.remove("hidden");
+    checkFillBtn.classList.add("hidden");
+  } else {
+    fillFeedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200";
+    fillFeedback.innerHTML = `🍓 まだちがうところがあります。<br><span class="text-xs font-normal">同じ数「45」を見つけて、45×(51−49) の形を考えてみよう。</span>`;
+  }
+}
+
+function startQuiz() {
   if (state.quizFinishedToday) {
     showToast("今日のチャレンジは完了しています。復習でワザを磨こう 🔁");
     return;
-  }
+  }showScreen("quiz")
 
   state.isReviewMode = false;
   state.reviewSkillId = "";
@@ -984,8 +1318,7 @@ if (state.quizFinishedToday) {
   state.correctCount = 0;
   state.answered = false;
 
-  loadQuestion();
-  showScreen("quiz");
+  showLesson();
 }
 
 function startReviewQuiz() {
@@ -1006,47 +1339,68 @@ function startReviewQuiz() {
 }
 
     function loadQuestion() {
-      const skill = getCurrentQuizSkill();
-      const question = skill.questions[state.currentQuestionIndex];
+  const skill = getCurrentQuizSkill();
 
-      state.answered = false;
+  // ランダム問題用の currentQuestions があれば使う。
+  // なければ、今まで通り skill.questions を使う。
+  const questions =
+    state.currentQuestions && state.currentQuestions.length > 0
+      ? state.currentQuestions
+      : skill.questions;
 
-      quizProgressText.textContent = `${state.currentQuestionIndex + 1} / ${skill.questions.length} 問め`;
-      if (quizMenuName) {
-  quizMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
+  if (!questions || questions.length === 0) {
+    showToast("このレシピにはまだ問題がありません。");
+    showScreen("home");
+    return;
+  }
+
+  const question = questions[state.currentQuestionIndex];
+
+  if (!question) {
+    showToast("問題データを読み込めませんでした。");
+    showScreen("home");
+    return;
+  }
+
+  state.answered = false;
+
+  quizProgressText.textContent = `STEP3 / 3　${state.currentQuestionIndex + 1} / ${questions.length} 問め`;
+
+  if (quizMenuName) {
+    quizMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
+  }
+
+  quizSkillName.textContent = `${skill.icon} ${skill.name}`;
+  quizSkillHint.textContent = skill.hint;
+
+  if (state.isReviewMode) {
+    quizModeLabel.textContent = "STEP3　復習マスター問題";
+    reviewBadge.classList.remove("hidden");
+  } else {
+    quizModeLabel.textContent = "STEP3　マスター問題";
+    reviewBadge.classList.add("hidden");
+  }
+
+  questionText.innerHTML = question.q.replace(/\n/g, "<br>");
+
+  feedbackBox.classList.add("hidden");
+  nextQuestionBtn.classList.add("hidden");
+
+  optionArea.innerHTML = "";
+
+  question.options.forEach((option, index) => {
+    const btn = document.createElement("button");
+    btn.className = "w-full text-left bg-[#FFFDF9] hover:bg-[#FAF6F0] active:bg-[#F3D7CA] border border-stone-200 hover:border-stone-400 p-3.5 rounded-xl text-sm font-semibold transition-all shadow-sm flex items-center justify-between";
+
+    btn.innerHTML = `
+      <span>${option}</span>
+      <span class="text-xs text-stone-300">☕</span>
+    `;
+
+    btn.addEventListener("click", () => answerQuestion(index));
+    optionArea.appendChild(btn);
+  });
 }
-
-quizSkillName.textContent = `${skill.icon} ${skill.name}`;
-quizSkillHint.textContent = skill.hint;
-
-      if (state.isReviewMode) {
-  quizModeLabel.textContent = "登録済みレシピの復習";
-  reviewBadge.classList.remove("hidden");
-} else {
-  quizModeLabel.textContent = "本日のレシピ";
-  reviewBadge.classList.add("hidden");
-}
-
-      questionText.innerHTML = question.q.replace(/\n/g, "<br>");
-
-      feedbackBox.classList.add("hidden");
-      nextQuestionBtn.classList.add("hidden");
-
-      optionArea.innerHTML = "";
-
-      question.options.forEach((option, index) => {
-        const btn = document.createElement("button");
-        btn.className = "w-full text-left bg-[#FFFDF9] hover:bg-[#FAF6F0] active:bg-[#F3D7CA] border border-stone-200 hover:border-stone-400 p-3.5 rounded-xl text-sm font-semibold transition-all shadow-sm flex items-center justify-between";
-
-        btn.innerHTML = `
-          <span>${option}</span>
-          <span class="text-xs text-stone-300">☕</span>
-        `;
-
-        btn.addEventListener("click", () => answerQuestion(index));
-        optionArea.appendChild(btn);
-      });
-    }
 
     function answerQuestion(selectedIndex) {
       if (state.answered) return;
@@ -1054,8 +1408,14 @@ quizSkillHint.textContent = skill.hint;
       state.answered = true;
 
       const skill = getCurrentQuizSkill();
-      const question = skill.questions[state.currentQuestionIndex];
-      const isCorrect = selectedIndex === question.answer;
+
+const questions =
+  state.currentQuestions && state.currentQuestions.length > 0
+    ? state.currentQuestions
+    : skill.questions;
+
+const question = questions[state.currentQuestionIndex];
+const isCorrect = selectedIndex === question.answer;
 
       const buttons = optionArea.querySelectorAll("button");
 
@@ -1091,16 +1451,21 @@ quizSkillHint.textContent = skill.hint;
     }
 
     function goNextQuestion() {
-      const skill = getTodaySkill();
+  const skill = getCurrentQuizSkill();
 
-      state.currentQuestionIndex++;
+  const questions =
+    state.currentQuestions && state.currentQuestions.length > 0
+      ? state.currentQuestions
+      : skill.questions;
 
-      if (state.currentQuestionIndex < skill.questions.length) {
-        loadQuestion();
-      } else {
-        finishQuiz();
-      }
-    }
+  state.currentQuestionIndex++;
+
+  if (questions && state.currentQuestionIndex < questions.length) {
+    loadQuestion();
+  } else {
+    finishQuiz();
+  }
+}
 
     function finishQuiz() {
   const skill = getCurrentQuizSkill();
@@ -1251,65 +1616,122 @@ quizSkillHint.textContent = skill.hint;
     // イベント
     // =========================
 
-    startQuizBtn.addEventListener("click", startQuiz);
-    reviewQuizBtn.addEventListener("click", startReviewQuiz);
+  function addClick(element, action) {
+  if (element) {
+    element.addEventListener("click", action);
+  }
+}
 
-    openBookBtn.addEventListener("click", () => {
-      renderBook();
-      showScreen("book");
-    });
+addClick(startQuizBtn, startQuiz);
 
-    backHomeBtn.addEventListener("click", () => {
-      showScreen("home");
-    });
+addClick(startQuestionsBtn, () => {
+  showFillBlank();
+});
 
-    nextQuestionBtn.addEventListener("click", goNextQuestion);
+addClick(lessonBackHomeBtn, () => {
+  showScreen("home");
+});
 
-    goBookBtn.addEventListener("click", () => {
-      renderBook();
-      showScreen("book");
-    });
+addClick(fillBackLessonBtn, () => {
+  showLesson();
+});
 
-    resultHomeBtn.addEventListener("click", () => {
-      showScreen("home");
-    });
+addClick(checkFillBtn, checkFillBlank);
 
-    bookHomeBtn.addEventListener("click", () => {
-      showScreen("home");
-    });
+addClick(goQuizBtn, () => {
+  loadQuestion();
+  showScreen("quiz");
+});
 
-    resetBtn.addEventListener("click", () => {
-      const ok = window.confirm("データをすべて消して、最初からやり直しますか？");
+addClick(reviewQuizBtn, startReviewQuiz);
 
-      if (!ok) return;
+addClick(openBookBtn, () => {
+  renderBook();
+  showScreen("book");
+});
 
-      localStorage.removeItem("math_cafe_toolbook_save");
+addClick(backHomeBtn, () => {
+  const skill = getCurrentQuizSkill();
 
-      state = {
-        points: 0,
-        streak: 0,
-        lastPlayedDate: "",
-        unlockedSkillIds: [],
-        currentSkillIndex: 0,
-        currentQuestionIndex: 0,
-        correctCount: 0,
-        answered: false,
-        quizFinishedToday: false
-      };
+  if (skill.lesson && skill.lesson.fillBlank) {
+    showFillBlank();
+  } else if (skill.lesson) {
+    showLesson();
+  } else {
+    showScreen("home");
+  }
+});
 
-      updateHome();
-      renderBook();
-      showScreen("home");
-      showToast("データをリセットしました ☕");
-    });
+addClick(nextQuestionBtn, goNextQuestion);
+
+addClick(goBookBtn, () => {
+  renderBook();
+  showScreen("book");
+});
+
+addClick(resultHomeBtn, () => {
+  showScreen("home");
+});
+
+addClick(bookHomeBtn, () => {
+  showScreen("home");
+});
+
+addClick(resetBtn, () => {
+  const ok = window.confirm("データをすべて消して、最初からやり直しますか？");
+
+  if (!ok) return;
+
+  localStorage.removeItem("math_cafe_toolbook_save");
+
+  state = {
+    points: 0,
+    streak: 0,
+    lastPlayedDate: "",
+    unlockedSkillIds: [],
+    currentSkillIndex: 0,
+    currentQuestionIndex: 0,
+    correctCount: 0,
+    answered: false,
+    quizFinishedToday: false,
+    isReviewMode: false,
+    reviewSkillId: ""
+  };
+
+  updateHome();
+  renderBook();
+  showScreen("home");
+  showToast("データをリセットしました ☕");
+});
 
     // =========================
     // 起動
     // =========================
 
     window.addEventListener("load", () => {
-      loadData();
-    });
+  loadData();
+
+  const todayMenuNameEl = document.getElementById("todayMenuName");
+  const todaySkillNameEl = document.getElementById("todaySkillName");
+  const todaySkillDescEl = document.getElementById("todaySkillDesc");
+  const todaySkillExampleEl = document.getElementById("todaySkillExample");
+
+  if (todayMenuNameEl) {
+    todayMenuNameEl.textContent = "新メニュー：表示テスト";
+  }
+
+  if (todaySkillNameEl) {
+    todaySkillNameEl.textContent = "✨ 分配法則";
+  }
+
+  if (todaySkillDescEl) {
+    todaySkillDescEl.textContent = "ここが表示されたら、HTMLのIDは正しく取れています。";
+  }
+
+  if (todaySkillExampleEl) {
+    todaySkillExampleEl.textContent = "18 × 7 = (10 + 8) × 7";
+  }
+});
   </script>
 </body>
 </html>
