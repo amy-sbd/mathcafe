@@ -1175,43 +1175,6 @@ function updateHome() {
   }
 }
 
-function forceRenderTodayRecipe() {
-  const skill = getTodaySkill() || SKILLS[0];
-
-  const todaySkillLabelEl = document.getElementById("todaySkillLabel");
-  const todayMenuNameEl = document.getElementById("todayMenuName");
-  const todaySkillNameEl = document.getElementById("todaySkillName");
-  const todaySkillDescEl = document.getElementById("todaySkillDesc");
-  const todaySkillExampleEl = document.getElementById("todaySkillExample");
-
-  if (!skill) {
-    return;
-  }
-
-  if (todaySkillLabelEl) {
-    todaySkillLabelEl.textContent = state.quizFinishedToday
-      ? "明日のレシピ予告"
-      : "本日のレシピ";
-  }
-
-  if (todayMenuNameEl) {
-    todayMenuNameEl.textContent = skill.menuName
-      ? `新メニュー：${skill.menuName}`
-      : "新メニュー：計算レシピ";
-  }
-
-  if (todaySkillNameEl) {
-    todaySkillNameEl.textContent = `${skill.icon} ${skill.name}`;
-  }
-
-  if (todaySkillDescEl) {
-    todaySkillDescEl.textContent = skill.desc;
-  }
-
-  if (todaySkillExampleEl) {
-    todaySkillExampleEl.textContent = skill.example;
-  }
-}
 
     // =========================
     // クイズ
@@ -1308,9 +1271,9 @@ function checkFillBlank() {
 
 function startQuiz() {
   if (state.quizFinishedToday) {
-    showToast("今日のチャレンジは完了しています。復習でワザを磨こう 🔁");
+    showToast("本日の仕込みは完了しています。レシピを復習して腕をみがこう 🔁");
     return;
-  }showScreen("quiz")
+  }
 
   state.isReviewMode = false;
   state.reviewSkillId = "";
@@ -1323,7 +1286,7 @@ function startQuiz() {
 
 function startReviewQuiz() {
   if (state.unlockedSkillIds.length === 0) {
-    showToast("まずは今日のワザを1つ登録しよう 📖");
+    showToast("まずは本日のレシピを1つ登録しよう 📖");
     return;
   }
 
@@ -1340,13 +1303,7 @@ function startReviewQuiz() {
 
     function loadQuestion() {
   const skill = getCurrentQuizSkill();
-
-  // ランダム問題用の currentQuestions があれば使う。
-  // なければ、今まで通り skill.questions を使う。
-  const questions =
-    state.currentQuestions && state.currentQuestions.length > 0
-      ? state.currentQuestions
-      : skill.questions;
+  const questions = skill.questions;
 
   if (!questions || questions.length === 0) {
     showToast("このレシピにはまだ問題がありません。");
@@ -1403,64 +1360,54 @@ function startReviewQuiz() {
 }
 
     function answerQuestion(selectedIndex) {
-      if (state.answered) return;
+  if (state.answered) return;
 
-      state.answered = true;
+  state.answered = true;
 
-      const skill = getCurrentQuizSkill();
+  const skill = getCurrentQuizSkill();
+  const question = skill.questions[state.currentQuestionIndex];
+  const isCorrect = selectedIndex === question.answer;
 
-const questions =
-  state.currentQuestions && state.currentQuestions.length > 0
-    ? state.currentQuestions
-    : skill.questions;
+  const buttons = optionArea.querySelectorAll("button");
 
-const question = questions[state.currentQuestionIndex];
-const isCorrect = selectedIndex === question.answer;
+  buttons.forEach((btn, index) => {
+    btn.disabled = true;
 
-      const buttons = optionArea.querySelectorAll("button");
+    const mark = btn.querySelector("span:last-child");
 
-      buttons.forEach((btn, index) => {
-        btn.disabled = true;
-
-        const mark = btn.querySelector("span:last-child");
-
-        if (index === question.answer) {
-          btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
-          btn.classList.add("bg-emerald-50", "border-emerald-300", "text-emerald-700");
-          mark.textContent = "⭕";
-        } else if (index === selectedIndex) {
-          btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
-          btn.classList.add("bg-rose-50", "border-rose-300", "text-rose-700");
-          mark.textContent = "❌";
-        } else {
-          btn.classList.add("opacity-40");
-        }
-      });
-
-      if (isCorrect) {
-        state.correctCount++;
-        feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200";
-        feedbackBox.innerHTML = `🌟 せいかい！<br><span class="text-xs font-normal">${question.exp}</span>`;
-      } else {
-        feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200";
-        feedbackBox.innerHTML = `🍓 おしい！<br><span class="text-xs font-normal">${question.exp}</span>`;
-      }
-
-      feedbackBox.classList.remove("hidden");
-      nextQuestionBtn.classList.remove("hidden");
+    if (index === question.answer) {
+      btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
+      btn.classList.add("bg-emerald-50", "border-emerald-300", "text-emerald-700");
+      mark.textContent = "⭕";
+    } else if (index === selectedIndex) {
+      btn.classList.remove("bg-[#FFFDF9]", "border-stone-200");
+      btn.classList.add("bg-rose-50", "border-rose-300", "text-rose-700");
+      mark.textContent = "❌";
+    } else {
+      btn.classList.add("opacity-40");
     }
+  });
+
+  if (isCorrect) {
+    state.correctCount++;
+    feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-50 text-emerald-800 border border-emerald-200";
+    feedbackBox.innerHTML = `🌟 せいかい！<br><span class="text-xs font-normal">${question.exp}</span>`;
+  } else {
+    feedbackBox.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200";
+    feedbackBox.innerHTML = `🍓 おしい！<br><span class="text-xs font-normal">${question.exp}</span>`;
+  }
+
+  feedbackBox.classList.remove("hidden");
+  nextQuestionBtn.classList.remove("hidden");
+}
 
     function goNextQuestion() {
   const skill = getCurrentQuizSkill();
-
-  const questions =
-    state.currentQuestions && state.currentQuestions.length > 0
-      ? state.currentQuestions
-      : skill.questions;
+  const questions = skill.questions;
 
   state.currentQuestionIndex++;
 
-  if (questions && state.currentQuestionIndex < questions.length) {
+  if (state.currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
     finishQuiz();
@@ -1710,27 +1657,6 @@ addClick(resetBtn, () => {
 
     window.addEventListener("load", () => {
   loadData();
-
-  const todayMenuNameEl = document.getElementById("todayMenuName");
-  const todaySkillNameEl = document.getElementById("todaySkillName");
-  const todaySkillDescEl = document.getElementById("todaySkillDesc");
-  const todaySkillExampleEl = document.getElementById("todaySkillExample");
-
-  if (todayMenuNameEl) {
-    todayMenuNameEl.textContent = "新メニュー：表示テスト";
-  }
-
-  if (todaySkillNameEl) {
-    todaySkillNameEl.textContent = "✨ 分配法則";
-  }
-
-  if (todaySkillDescEl) {
-    todaySkillDescEl.textContent = "ここが表示されたら、HTMLのIDは正しく取れています。";
-  }
-
-  if (todaySkillExampleEl) {
-    todaySkillExampleEl.textContent = "18 × 7 = (10 + 8) × 7";
-  }
 });
   </script>
 </body>
