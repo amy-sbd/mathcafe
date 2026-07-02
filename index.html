@@ -135,31 +135,7 @@
   </div>
 </div>
 
-        <!-- 今日の見方カード -->
-<div class="bg-white border border-[#EADBC8] rounded-2xl p-4 shadow-sm">
-  <div class="flex items-center gap-2 mb-3">
-    <span class="text-xl">🔍</span>
-    <h3 class="font-bold text-sm text-[#AF8260]">今日の見方</h3>
-  </div>
-
-  <div class="bg-[#FBF9F1] border border-stone-200 rounded-xl p-4 text-center">
-    <p id="visualStepStart" class="text-xl font-bold text-stone-800"></p>
-
-    <div class="my-3 text-stone-300">↓</div>
-
-    <p id="visualStepOne" class="text-sm font-bold text-[#AF8260]"></p>
-
-    <div class="my-3 text-stone-300">↓</div>
-
-    <p id="visualStepTwo" class="text-sm font-bold text-stone-700"></p>
-
-    <div class="my-3 text-stone-300">↓</div>
-
-    <p id="visualStepEnd" class="text-sm font-bold text-emerald-700"></p>
-  </div>
-
-  <p id="visualStepTip" class="text-xs text-stone-500 mt-3 leading-relaxed"></p>
-</div>
+        
 
         <!-- ボタン -->
         <div class="grid gap-3">
@@ -243,31 +219,9 @@
       <p id="fillQuestion" class="text-xl font-bold text-stone-800"></p>
     </div>
 
-    <div class="mt-4 space-y-3 text-center text-sm font-bold text-stone-700 leading-loose">
-      <div>
-        <span id="fillBefore"></span>
-      </div>
-
-      <div>
-        =
-        45 × (
-        <input id="blank0" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
-        −
-        <input id="blank1" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
-        )
-      </div>
-
-      <div>
-        =
-        45 ×
-        <input id="blank2" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
-      </div>
-
-      <div>
-        =
-        <input id="blank3" inputmode="numeric" class="w-20 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
-      </div>
-    </div>
+    <div id="fillFormulaArea" class="mt-4 space-y-3 text-center text-sm font-bold text-stone-700 leading-loose">
+  <!-- JavaScriptで穴埋め式を表示 -->
+</div>
 
     <div id="fillFeedback" class="hidden mt-4 p-3 rounded-xl text-center text-sm font-bold"></div>
 
@@ -420,7 +374,7 @@
   tip: "大きな数は、きりのいい数に分けると見やすくなるよ。これが分配法則の入り口です。"
 },
 lesson: {
-  title: "同じ数を見つけてまとめる",
+  title: "同じ材料を見つけて、ひとつのレシピにまとめよう",
   example: "38×78 + 62×78",
   steps: [
     "① かけ算の部分に同じ数があるか見る",
@@ -431,12 +385,36 @@ lesson: {
   ],
   point: "同じ数がかけられているときは、前の数をまとめられます。これも分配法則の大事な使い方です。",
   fillBlank: {
-    title: "同じ数を見つけて、式をまとめよう",
-    question: "45×51 − 45×49",
-    before: "45×51 − 45×49",
-    blanks: ["51", "49", "2", "90"],
-    explanation: "どちらにも45があるので、45×(51−49) とまとめます。51−49=2、45×2=90です。"
-  }
+  title: "同じ数を見つけて、式をまとめよう",
+  question: "45×51 − 45×49",
+  before: "45×51 − 45×49",
+  formulaHtml: `
+    <div>45×51 − 45×49</div>
+
+    <div>
+      =
+      45 × (
+      <input data-blank-index="0" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+      −
+      <input data-blank-index="1" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+      )
+    </div>
+
+    <div>
+      =
+      45 ×
+      <input data-blank-index="2" inputmode="numeric" class="w-14 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+    </div>
+
+    <div>
+      =
+      <input data-blank-index="3" inputmode="numeric" class="w-20 text-center border border-stone-300 rounded-lg py-1 bg-[#FFFDF9]" />
+    </div>
+  `,
+  blanks: ["51", "49", "2", "90"],
+hint: "同じ数「45」を見つけて、45×(51−49) の形を考えてみよう。",
+explanation: "どちらにも45があるので、45×(51−49) とまとめます。51−49=2、45×2=90です。"
+}
 },
 questions: [
   {
@@ -886,11 +864,7 @@ const todaySkillDesc = document.getElementById("todaySkillDesc");
     const bookTotalText = document.getElementById("bookTotalText");
     const bookProgressBar = document.getElementById("bookProgressBar");
     const bookProgressMessage = document.getElementById("bookProgressMessage");
-    const visualStepStart = document.getElementById("visualStepStart");
-    const visualStepOne = document.getElementById("visualStepOne");
-    const visualStepTwo = document.getElementById("visualStepTwo");
-    const visualStepEnd = document.getElementById("visualStepEnd");
-    const visualStepTip = document.getElementById("visualStepTip");
+    
 
     const startQuizBtn = document.getElementById("startQuizBtn");
     const reviewQuizBtn = document.getElementById("reviewQuizBtn");
@@ -905,22 +879,13 @@ const lessonSteps = document.getElementById("lessonSteps");
 const lessonPoint = document.getElementById("lessonPoint");
 const startQuestionsBtn = document.getElementById("startQuestionsBtn");
 
-const fillBackLessonBtn = document.getElementById("fillBackLessonBtn");
-const fillMenuName = document.getElementById("fillMenuName");
-const fillSkillName = document.getElementById("fillSkillName");
-const fillTitle = document.getElementById("fillTitle");
 const fillQuestion = document.getElementById("fillQuestion");
-const fillBefore = document.getElementById("fillBefore");
+const fillFormulaArea = document.getElementById("fillFormulaArea");
 const fillFeedback = document.getElementById("fillFeedback");
 const checkFillBtn = document.getElementById("checkFillBtn");
 const goQuizBtn = document.getElementById("goQuizBtn");
 
-const blankInputs = [
-  document.getElementById("blank0"),
-  document.getElementById("blank1"),
-  document.getElementById("blank2"),
-  document.getElementById("blank3")
-];
+let blankInputs = [];
 
 const backHomeBtn = document.getElementById("backHomeBtn");
 const quizProgressText = document.getElementById("quizProgressText");
@@ -1120,28 +1085,16 @@ function updateHome() {
   }
 
   if (todaySkillDescEl) {
-    todaySkillDescEl.textContent = skill.desc;
-  }
+  todaySkillDescEl.textContent = state.quizFinishedToday
+    ? "今日の仕込みは完了。明日はこのレシピにチャレンジしよう。"
+    : `${skill.desc} STEP1で考え方を見てから、穴埋めとマスター問題に進みます。`;
+}
 
   if (todaySkillExampleEl) {
-    todaySkillExampleEl.textContent = skill.example;
-  }
+  todaySkillExampleEl.textContent = `練習例：${skill.example}`;
+}
 
-  if (visualStepStart && visualStepOne && visualStepTwo && visualStepEnd && visualStepTip) {
-    if (skill.visual) {
-      visualStepStart.textContent = skill.visual.start;
-      visualStepOne.textContent = skill.visual.step1;
-      visualStepTwo.textContent = skill.visual.step2;
-      visualStepEnd.textContent = skill.visual.end;
-      visualStepTip.textContent = skill.visual.tip;
-    } else {
-      visualStepStart.textContent = skill.example;
-      visualStepOne.textContent = "① 式の中に使えそうな形を見つける";
-      visualStepTwo.textContent = "② まとめたり、順番を変えたりする";
-      visualStepEnd.textContent = "③ 計算しやすい形にする";
-      visualStepTip.textContent = "計算レシピは、答えを急ぐより『どこを見るか』が大事です。";
-    }
-  }
+  
 
   if (state.quizFinishedToday) {
     characterMessage.textContent = "今日の新レシピは完成！もっとやるなら、登録したレシピを復習してみよう。";
@@ -1166,6 +1119,7 @@ function updateHome() {
     bookProgressMessage.textContent = "全部のレシピを登録できたよ！復習で使えるようにしていこう。";
   }
 
+  if (startQuizBtn) {
   if (state.quizFinishedToday) {
     startQuizBtn.textContent = "本日の仕込みは完了 ☕";
     startQuizBtn.classList.add("opacity-60");
@@ -1173,6 +1127,7 @@ function updateHome() {
     startQuizBtn.textContent = "本日の仕込みチャレンジ 🍰";
     startQuizBtn.classList.remove("opacity-60");
   }
+}
 }
 
 
@@ -1198,11 +1153,11 @@ function updateHome() {
   lessonSteps.innerHTML = "";
 
   skill.lesson.steps.forEach(step => {
-    const item = document.createElement("div");
-    item.className = "bg-[#FFFDF9] border border-stone-200 rounded-xl p-3 text-sm font-bold text-stone-700";
-    item.textContent = step;
-    lessonSteps.appendChild(item);
-  });
+  const item = document.createElement("div");
+  item.className = "bg-[#FFFDF9] border border-[#EADBC8] rounded-xl p-3 text-sm text-stone-700 leading-relaxed shadow-sm";
+  item.textContent = step;
+  lessonSteps.appendChild(item);
+});
 
   showScreen("lesson");
 }
@@ -1219,15 +1174,17 @@ function showFillBlank() {
   const fill = skill.lesson.fillBlank;
 
   fillMenuName.textContent = skill.menuName ? skill.menuName : "計算レシピ";
-  fillSkillName.textContent = `${skill.icon} ${skill.name}`;
-  fillTitle.textContent = fill.title;
-  fillQuestion.textContent = fill.question;
-  fillBefore.textContent = fill.before;
+fillSkillName.textContent = `${skill.icon} ${skill.name}`;
+fillTitle.textContent = fill.title;
+fillQuestion.textContent = fill.question;
 
-  blankInputs.forEach(input => {
-    input.value = "";
-    input.classList.remove("border-emerald-400", "border-rose-400", "bg-emerald-50", "bg-rose-50");
-  });
+fillFormulaArea.innerHTML = fill.formulaHtml;
+blankInputs = Array.from(fillFormulaArea.querySelectorAll("input[data-blank-index]"));
+
+blankInputs.forEach(input => {
+  input.value = "";
+  input.classList.remove("border-emerald-400", "border-rose-400", "bg-emerald-50", "bg-rose-50");
+});
 
   fillFeedback.classList.add("hidden");
   goQuizBtn.classList.add("hidden");
@@ -1265,7 +1222,7 @@ function checkFillBlank() {
     checkFillBtn.classList.add("hidden");
   } else {
     fillFeedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-50 text-rose-800 border border-rose-200";
-    fillFeedback.innerHTML = `🍓 まだちがうところがあります。<br><span class="text-xs font-normal">同じ数「45」を見つけて、45×(51−49) の形を考えてみよう。</span>`;
+fillFeedback.innerHTML = `🍓 まだちがうところがあります。<br><span class="text-xs font-normal">${fill.hint}</span>`;
   }
 }
 
